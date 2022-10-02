@@ -25,7 +25,7 @@ public class HrApplication implements CommandLineRunner {
 		System.out.println(saleryService.setSalary(new Employee(1,"Kóst Elek","CEO",1000000,LocalDateTime.of(2010, 1, 14, 10, 34))));
 		System.out.println(saleryService.setSalary(new Employee(2,"Lapos Elemér","Coordinator",200000,LocalDateTime.of(2014, 1, 14, 10, 34))));
 		System.out.println(saleryService.setSalary(new Employee(3,"Lusta Gyula","Manager",300000,LocalDateTime.of(2018, 1, 14, 10, 34))));
-		System.out.println(saleryService.setSalary(new Employee(4,"Kiss Zoltán","Project Manager",700000,LocalDateTime.of(2020, 1, 14, 10, 34))));
+		System.out.println(saleryService.setSalary(new Employee(4,"Kiss Zoltán","Project Manager",800000,LocalDateTime.of(2020, 1, 14, 10, 34))));
 	}
 
 }
