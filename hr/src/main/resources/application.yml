@@ -1,0 +1,20 @@
+hr:
+  salary:
+    def:
+      percent: 5
+    smart:
+      year:
+        five:
+          limit: 5
+          percent: 5
+        lessThantwoPointFive:
+          percent: 0
+        ten:
+          limit: 10
+          percent: 10
+        twoPointFive:
+          limit: 2.5
+          percent: 2
+spring:
+  profiles:
+    active: smart
