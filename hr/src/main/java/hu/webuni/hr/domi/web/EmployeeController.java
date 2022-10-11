@@ -45,13 +45,14 @@ public class EmployeeController {
 	@GetMapping("/filter")
 	public List<EmployeeDto> getFilterListByPay(@RequestParam(name = "pay") int pay) {
 		
-		Map<Long, EmployeeDto> filteredEmployees = allEmployees
+		List<EmployeeDto> filteredEmployees = allEmployees
 				.entrySet()
 				.stream()
 				.filter(employee -> employee.getValue().getPay() > pay)
-				.collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+				.map(Map.Entry::getValue)
+				.collect(Collectors.toList());
 		
-		return new ArrayList<>(filteredEmployees.values());
+		return filteredEmployees;
 	}
 	
 	
