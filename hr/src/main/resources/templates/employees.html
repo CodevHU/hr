@@ -11,7 +11,7 @@
 	<table width="100%" border="1">
 		<tr th:each="employee: ${employees}">
 			<td th:text="${employee.identifier}">ID</td>
-			<td th:text="${employee.name}">name</td>
+			<td><a th:href="@{'/employees/' + ${employee.identifier} }" th:text="${employee.name}">name</a></td>
 			<td th:text="${employee.workPosition}">workPosition</td>
 			<td th:text="${employee.pay}">pay</td>
 			<td th:text="${employee.firstWorkingDay}">firstWorkingDay</td>
