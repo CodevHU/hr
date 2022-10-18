@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import hu.webuni.hr.domi.model.Employee;
 
@@ -39,15 +40,21 @@ public class EmployeeTLController {
 	@PostMapping("/employees")
 	public String addEmployee(Employee employee) {
 		
+		allEmployees.add(employee);
+		
+		return "redirect:/employees";
+	}
+	
+	@PutMapping("/employees/update/{id}")
+	public String updateEmployee(Employee employee, @PathVariable int id) {
+		
 		Employee findByIndex = allEmployees.stream()
-				  .filter(e -> employee.getIdentifier() == e.getIdentifier())
+				  .filter(e -> id == e.getIdentifier())
 				  .findFirst()
 				  .orElse(null);
 
 		if (findByIndex != null) {
 			allEmployees.set(allEmployees.indexOf(findByIndex), employee);
-		} else {
-			allEmployees.add(employee);
 		}
 
 		return "redirect:/employees";

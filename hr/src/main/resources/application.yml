@@ -18,3 +18,7 @@ hr:
 spring:
   profiles:
     active: smart
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
