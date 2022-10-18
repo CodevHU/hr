@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +50,7 @@ public class EmployeeTLController {
 			allEmployees.add(employee);
 		}
 
-		return "redirect:employees";
+		return "redirect:/employees";
 	}
 
 	@GetMapping("/employees/{id}")
@@ -65,6 +66,22 @@ public class EmployeeTLController {
 	    }
 
 		return "employees_edit";
+	}
+	
+	
+	@GetMapping("/employees/delete/{id}")
+	public String deleteEmployee(Map<String, Object> model, @PathVariable int id) {
+		
+		Employee findByIndex = allEmployees.stream()
+				  .filter(e -> id == e.getIdentifier())
+				  .findFirst()
+				  .orElse(null);
+		
+		if (findByIndex != null) {
+			allEmployees.remove(allEmployees.indexOf(findByIndex));
+		}
+
+		return "redirect:/employees";
 	}
 
 }

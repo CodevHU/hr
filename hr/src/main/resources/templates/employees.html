@@ -15,6 +15,7 @@
 			<td th:text="${employee.workPosition}">workPosition</td>
 			<td th:text="${employee.pay}">pay</td>
 			<td th:text="${employee.firstWorkingDay}">firstWorkingDay</td>
+			<td><a th:href="@{/employees/delete/{id}(id=${employee.identifier})}">Delete</a></td>
 		</tr>
 	</table>
 	<br/><br/>
