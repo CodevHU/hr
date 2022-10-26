@@ -2,15 +2,26 @@ package hu.webuni.hr.domi.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class EmployeeDto {
 
 	private long id;
+	
+	@NotBlank
 	private String name;
+	
+	@NotBlank
 	private String workPosition;
+	
+	@Min(0)
 	private int pay;
 
+	@Past
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime firstWorkingDay;
 	

@@ -1,16 +1,11 @@
 package hu.webuni.hr.domi.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hu.webuni.hr.domi.config.HrConfigProperties;
 import hu.webuni.hr.domi.model.Employee;
 
 @Service
-public class DefaultEmployeeService implements EmployeeService {
-
-	@Autowired
-	HrConfigProperties config;
+public class DefaultEmployeeService extends AbstractEmployeeService {
 	
 	@Override
 	public int getPayRaisePercent(Employee employee) {

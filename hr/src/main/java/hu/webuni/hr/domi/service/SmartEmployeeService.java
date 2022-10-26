@@ -4,18 +4,13 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hu.webuni.hr.domi.config.HrConfigProperties;
 import hu.webuni.hr.domi.config.HrConfigProperties.Year;
 import hu.webuni.hr.domi.model.Employee;
 
 @Service
-public class SmartEmployeeService implements EmployeeService {
-	
-	@Autowired
-	HrConfigProperties config;
+public class SmartEmployeeService extends AbstractEmployeeService {
 
 	@Override
 	public int getPayRaisePercent(Employee employee) {
