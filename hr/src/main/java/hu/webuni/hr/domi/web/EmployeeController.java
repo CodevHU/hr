@@ -38,7 +38,7 @@ public class EmployeeController {
 	}
 	
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") 
 	public EmployeeDto getById(@PathVariable long id) {
 		
 		Employee employee = employeeService.findById(id);
@@ -59,6 +59,7 @@ public class EmployeeController {
 	public EmployeeDto addEmployee(@RequestBody @Valid EmployeeDto employee){
 		
 		employeeService.save(employeeMapper.employeeDtoToEmployee(employee));
+		
 		return employee;
 	}
 	
