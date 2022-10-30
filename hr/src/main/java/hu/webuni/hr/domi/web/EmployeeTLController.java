@@ -49,7 +49,7 @@ public class EmployeeTLController {
 	public String updateEmployee(Employee employee, @PathVariable int id) {
 		
 		Employee findByIndex = allEmployees.stream()
-				  .filter(e -> id == e.getIdentifier())
+				  .filter(e -> id == e.getId())
 				  .findFirst()
 				  .orElse(null);
 
@@ -64,7 +64,7 @@ public class EmployeeTLController {
 	public String getEmployeeById(Map<String, Object> model, @PathVariable int id) {
 
 		for (Employee employee : allEmployees) {
-	        if (employee.getIdentifier() == id) {
+	        if (employee.getId() == id) {
 	   
 	    		model.put("employee", employee);
 	    		return "employees_edit";
@@ -80,7 +80,7 @@ public class EmployeeTLController {
 	public String deleteEmployee(Map<String, Object> model, @PathVariable int id) {
 		
 		Employee findByIndex = allEmployees.stream()
-				  .filter(e -> id == e.getIdentifier())
+				  .filter(e -> id == e.getId())
 				  .findFirst()
 				  .orElse(null);
 		

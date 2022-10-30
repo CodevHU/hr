@@ -3,21 +3,28 @@ package hu.webuni.hr.domi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.webuni.hr.domi.dto.EmployeeDto;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Company {
 	
+	@Id
+	@GeneratedValue
 	private long id;
 	private String registrationNumber;
 	private String name;
 	private String address;
 	
-	List<EmployeeDto> employees = new ArrayList<>();
+	@OneToMany
+	List<Employee> employees = new ArrayList<>();
 	
 	public Company() {		
 	}
 	
-	public Company(long id, String registrationNumber, String name, String address, List<EmployeeDto> employees) {
+	public Company(long id, String registrationNumber, String name, String address, List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
@@ -45,7 +52,7 @@ public class Company {
 		return address;
 	}
 
-	public List<EmployeeDto> getEmployees() {
+	public List<Employee> getEmployees() {
 		return employees;
 	}
 
@@ -61,7 +68,7 @@ public class Company {
 		this.address = address;
 	}
 
-	public void setEmployees(List<EmployeeDto> employees) {
+	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
 	

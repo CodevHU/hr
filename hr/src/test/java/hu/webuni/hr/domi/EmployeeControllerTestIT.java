@@ -30,7 +30,7 @@ public class EmployeeControllerTestIT {
 		List<EmployeeDto> employeesBefore = getAllEmployees();
 		
 		EmployeeDto updatedEmployee = employeesBefore.get(0);
-		long id = updatedEmployee.getIdentifier();
+		long id = updatedEmployee.getId();
 		
 		updatedEmployee.setName("Módosítva");
 		
@@ -117,7 +117,7 @@ public class EmployeeControllerTestIT {
 					.expectBodyList(EmployeeDto.class)
 					.returnResult().getResponseBody();
 		
-		Collections.sort(employees, (a1,a2) -> Long.compare(a1.getIdentifier(), a2.getIdentifier()));
+		Collections.sort(employees, (a1,a2) -> Long.compare(a1.getId(), a2.getId()));
 		
 		return employees;	
 		

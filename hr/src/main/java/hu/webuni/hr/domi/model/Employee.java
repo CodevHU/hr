@@ -2,14 +2,20 @@ package hu.webuni.hr.domi.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity
 public class Employee {
 
+	@Id
+	@GeneratedValue
 	private long id;
 	
 	@NotBlank
@@ -37,7 +43,7 @@ public class Employee {
 		this.firstWorkingDay = firstWorkingDay;
 	}
 
-	public long getIdentifier() {
+	public long getId() {
 		return id;
 	}
 
@@ -57,7 +63,7 @@ public class Employee {
 		return firstWorkingDay;
 	}
 
-	public void setIdentifier(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -17,5 +17,7 @@ public interface EmployeeMapper {
 	EmployeeDto employeeToDto(Employee employee);
 
 	Employee employeeDtoToEmployee(@Valid EmployeeDto employee);
+
+	List<Employee> employeeDtosToEmployee(List<EmployeeDto> employees);
 	
 }

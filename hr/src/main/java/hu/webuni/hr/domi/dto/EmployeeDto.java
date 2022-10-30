@@ -37,7 +37,7 @@ public class EmployeeDto {
 		this.firstWorkingDay = firstWorkingDay;
 	}
 
-	public long getIdentifier() {
+	public long getId() {
 		return id;
 	}
 
@@ -57,7 +57,7 @@ public class EmployeeDto {
 		return firstWorkingDay;
 	}
 
-	public void setIdentifier(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
