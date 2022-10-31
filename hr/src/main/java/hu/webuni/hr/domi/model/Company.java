@@ -3,8 +3,10 @@ package hu.webuni.hr.domi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -16,13 +18,13 @@ import javax.persistence.OneToMany;
 public class Company {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private long id;
 	private String registrationNumber;
 	private String name;
 	private String address;
 	
-	@OneToMany(mappedBy = "company")
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	List<Employee> employees = new ArrayList<>();
 	
 	public Company() {		
