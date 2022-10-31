@@ -1,7 +1,6 @@
 package hu.webuni.hr.domi.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +58,13 @@ public class CompanyService {
 //					.collect(Collectors.toList())
 //					);
 		
+		company.getEmployees().stream().peek(f -> {
+			Optional<Employee> employee = employeeRepository.findById(f.getId());
+			employee.get().setCompany(company);
+			employeeRepository.save(employee.get());
+			
+		}).collect(Collectors.toList());
+		
 		return companyRepository.save(company);
 	}
 	
@@ -66,8 +72,17 @@ public class CompanyService {
 	public Company updateCompany(long id, Company company) {
 		
 		company.setId(id);
-		if(companyRepository.existsById(company.getId()))
-			return companyRepository.save(company);
+		if(companyRepository.existsById(company.getId())) {
+			
+			company.getEmployees().stream().peek(f -> {
+				Optional<Employee> employee = employeeRepository.findById(f.getId());
+				employee.get().setCompany(company);
+				employeeRepository.save(employee.get());
+				
+			}).collect(Collectors.toList());
+			
+			return companyRepository.save(company); 
+			}
 		else 
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		

@@ -49,6 +49,19 @@ public class Employee {
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 	}
+	
+	
+
+	public Employee(long id, @NotBlank String name, @NotBlank String workPosition, @Min(0) int pay,
+			@Past LocalDateTime firstWorkingDay, Company company) {
+
+		this.id = id;
+		this.name = name;
+		this.workPosition = workPosition;
+		this.pay = pay;
+		this.firstWorkingDay = firstWorkingDay;
+		this.company = company;
+	}
 
 	public Company getCompany() {
 		return company;
