@@ -29,7 +29,7 @@ import hu.webuni.hr.domi.service.EmployeeService;
 public class CompanyController {
 	
 //	@Autowired
-//	EmployeeService employeeService;
+//	AbstractEmployeeService abstractemployeeService;
 
 	@Autowired
 	private CompanyService companyService;
@@ -111,7 +111,7 @@ public class CompanyController {
 	@PostMapping("/salary")
 	public int getSalary(@RequestBody Employee employee) {
 		
-//		employeeService.findById(employee.getId())
+//		abstractemployeeService.findById(employee.getId())
 //			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
 		return employeeService.getPayRaisePercent(employee);

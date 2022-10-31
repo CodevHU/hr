@@ -88,7 +88,9 @@ public class CompanyService {
 		
 		if (!company.isEmpty() && !employee.isEmpty()) {
 			
+			
 			List<Employee> employees = company.get().getEmployees();
+			employee.get().setCompany(company.get());
 			employees.add(employee.get());
 			
 			
@@ -111,6 +113,7 @@ public class CompanyService {
 			if(!company.get().getEmployees().removeIf(e -> e.getId() == eid)) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 			} else {
+				System.out.println(company.get().getEmployees());
 				companyRepository.save(company.get());
 			}
 			
@@ -121,13 +124,24 @@ public class CompanyService {
 	
 	}
 	
-	public Company updateAllEmployeeToCompany(long id, List<EmployeeDto> employees) {
+	public Company updateAllEmployeeToCompany(long id, List<EmployeeDto> employeesDto) {
 		
 		Optional<Company> company = companyRepository.findById(id);
 		
 		if (company.isPresent()) {
-			company.get().setEmployees(employeeMapper.employeeDtosToEmployee(employees));
-			return companyRepository.save(company.get());
+		
+			company.get().getEmployees().stream()
+			.peek(f -> f.setCompany(null))
+			.collect(Collectors.toList());
+			
+			companyRepository.save(company.get());
+			
+			Optional<Company> afterSaveCompany = companyRepository.findById(id);
+			
+			
+			afterSaveCompany.get().setEmployees(employeeMapper.employeeDtosToEmployee(employeesDto));
+			
+			return companyRepository.save(afterSaveCompany.get());
 		}
 		else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);

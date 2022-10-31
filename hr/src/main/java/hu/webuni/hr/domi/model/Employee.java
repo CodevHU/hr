@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -31,16 +32,29 @@ public class Employee {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime firstWorkingDay;
 	
+	@ManyToOne 
+	Company company;
+	
 	public Employee() {
 		
 	}
 	
-	public Employee(long id, String name, String workPosition, int pay, LocalDateTime firstWorkingDay) {
+	public Employee(long id, @NotBlank String name, @NotBlank String workPosition, @Min(0) int pay,
+			@Past LocalDateTime firstWorkingDay) {
+
 		this.id = id;
 		this.name = name;
 		this.workPosition = workPosition;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public long getId() {

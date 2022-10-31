@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * @author domok
+ *
+ */
 @Entity
 public class Company {
 	
@@ -18,7 +22,7 @@ public class Company {
 	private String name;
 	private String address;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "company")
 	List<Employee> employees = new ArrayList<>();
 	
 	public Company() {		
@@ -71,6 +75,8 @@ public class Company {
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
+	
+	
 	
 	
 }
