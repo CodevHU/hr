@@ -20,7 +20,6 @@ import hu.webuni.hr.domi.dto.CompanyDto;
 import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.CompanyMapper;
 import hu.webuni.hr.domi.model.Company;
-import hu.webuni.hr.domi.model.Employee;
 import hu.webuni.hr.domi.service.CompanyService;
 import hu.webuni.hr.domi.service.EmployeeService;
 
@@ -106,15 +105,6 @@ public class CompanyController {
 		Company company = companyService.updateAllEmployeeToCompany(id, employees);
 		return companyMapper.companyToDto(company);
 		
-	}
-	
-	@PostMapping("/salary")
-	public int getSalary(@RequestBody Employee employee) {
-		
-//		abstractemployeeService.findById(employee.getId())
-//			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		
-		return employeeService.getPayRaisePercent(employee);
 	}
 
 

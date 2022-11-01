@@ -21,14 +21,14 @@ import org.springframework.web.server.ResponseStatusException;
 import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Employee;
-import hu.webuni.hr.domi.service.AbstractEmployeeService;
+import hu.webuni.hr.domi.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
 	@Autowired
-	AbstractEmployeeService employeeService;
+	EmployeeService employeeService;
 
 	@Autowired
 	EmployeeMapper employeeMapper;
@@ -41,8 +41,8 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public EmployeeDto getById(@PathVariable long id) {
 
-		Employee employee = employeeService.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		Employee employee = employeeService.findById(id);
+//				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 		return employeeMapper.employeeToDto(employee);
 
@@ -103,6 +103,13 @@ public class EmployeeController {
 
 		return true;
 
+	}
+	
+	@PostMapping("/salary/{id}")
+	public int getSalary(@PathVariable long id) {
+		
+		Employee employee = employeeService.findById(id);
+		return employeeService.getPayRaisePercent(employee);
 	}
 
 //	private void checkNegativePayment(EmployeeDto employee) {

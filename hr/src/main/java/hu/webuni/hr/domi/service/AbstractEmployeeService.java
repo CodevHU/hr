@@ -31,17 +31,23 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	}
 
 	
+	@Override
 	public List<Employee> getAll() {
 		return new ArrayList<>(employeeRepository.findAll());
 	}
 	
+	@Override
+	public Employee findById(long id) {
 
-	public Optional<Employee> findById(long id) {
-
-		return employeeRepository.findById(id);
+		if(employeeRepository.existsById(id)) {
+			return employeeRepository.findById(id).get();
+		} else 
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		
 		
 	}
 
+	@Override
 	@Transactional
 	public void delete(long id) {
 		
@@ -55,6 +61,7 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
 
+	@Override
 	@Transactional
 	public void update(long id, Employee employee) {
 		
@@ -64,7 +71,9 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 		else 
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
-
+	
+	
+	@Override
 	public List<Employee> filterByPay(int pay) {
 		
 		List<Employee> filteredEmployees = employeeRepository.findByPayGreaterThan(pay);
@@ -73,16 +82,19 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 
 	}
 	
+	@Override
 	public List<Employee> filterByWorkPosition(String workPosition){
 		List<Employee> filteredEmployees = employeeRepository.findByWorkPosition(workPosition);
 		return filteredEmployees;
 	}
 	
+	@Override
 	public List<Employee> filterByNameFirstCharacter(char firstChar){
 		List<Employee> filteredEmployees = employeeRepository.findByNameLikeIgnoreCase(firstChar + "%");
 		return filteredEmployees;
 	}
 	
+	@Override
 	public List<Employee> filterByFirstWorkDay(LocalDateTime startDate, LocalDateTime endDate){
 		List<Employee> filteredEmployees = employeeRepository.findByFirstWorkingDayBetween(startDate,endDate);
 		return filteredEmployees;
