@@ -26,6 +26,7 @@ public class HrApplication implements CommandLineRunner {
 		
 		dbService.clearDB();
 		dbService.insertTestData();
+		
 	}
 
 }

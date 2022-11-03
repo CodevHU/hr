@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Company;
 import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.EmployeeSalaryAvg;
 import hu.webuni.hr.domi.repository.CompanyRepository;
 import hu.webuni.hr.domi.repository.EmployeeRepository;
 
@@ -146,9 +147,26 @@ public class CompanyService {
 		
 	}
 	
+	public List<EmployeeSalaryAvg> getAvg(long companyId) {
+		List<EmployeeSalaryAvg> epmployeeSalaryAvg = companyRepository.getAvgByInterface(companyId);
+		return epmployeeSalaryAvg;
+	}
+	
+	public List<Company> getCompaniesHhereTheSalaryOfTheEmployeesIsGreaterThanParam(int salary){
+
+		return companyRepository.findAllByEmployeesPayGreaterThan(salary);
+	}
+	
+	public List<Company> getCompaniesWhereTheEmployeesCountIsGreaterThanParam(Long employeeCount) {
+		return companyRepository.findCompaniesWhereTheEmployeesCountIsGreaterThanParam(employeeCount);
+	}
+	
+	
 	private Company createCompanyWithoutEmployees(Company c) {
 		return new Company(c.getId(), c.getRegistrationNumber(), c.getName(), c.getAddress(), null);
 	}
+
+	
 
 	
 	

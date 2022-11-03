@@ -21,6 +21,7 @@ import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.CompanyMapper;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Company;
+import hu.webuni.hr.domi.model.EmployeeSalaryAvg;
 import hu.webuni.hr.domi.service.CompanyService;
 import hu.webuni.hr.domi.service.EmployeeService;
 
@@ -52,6 +53,20 @@ public class CompanyController {
 			return companyMapper.companyToDtos(companyService.getCompaniesWithEmployees());
 		}
 	}
+	
+	@GetMapping("/filter")
+	public List<CompanyDto> filterSalary(@RequestParam(required = false, name = "salary") Integer salary, @RequestParam(required = false, name = "employeeCount") Long employeeCount) {
+		
+		if(salary != null) {
+			return companyMapper.companyToDtos(companyService.getCompaniesHhereTheSalaryOfTheEmployeesIsGreaterThanParam(salary));
+		} else if(employeeCount != null) {
+			return companyMapper.companyToDtos(companyService.getCompaniesWhereTheEmployeesCountIsGreaterThanParam(employeeCount));
+		}
+		else
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		
+		
+	}
 
 	@GetMapping("/{id}")
 	public CompanyDto getCompanyById(@PathVariable int id) {
@@ -60,6 +75,16 @@ public class CompanyController {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 		return companyMapper.companyToDto(company);
+		
+	}
+	
+	@GetMapping("/{id}/avg")
+	public List<EmployeeSalaryAvg> getCompanyEmployeesAvgSalary(@PathVariable int id) {
+		
+		companyService.getById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		return companyService.getAvg(id);
 		
 	}
 
