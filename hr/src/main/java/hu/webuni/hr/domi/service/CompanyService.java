@@ -1,6 +1,5 @@
 package hu.webuni.hr.domi.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Company;
 import hu.webuni.hr.domi.model.Employee;
@@ -102,83 +100,49 @@ public class CompanyService {
 	}
 	
 	@Transactional
-	public Company addEmployeeToCompany(long companyId, EmployeeDto employeeDto) {
+	public Company addEmployeeToCompany(long companyId, Employee employee) {
 		
-		Optional<Company> company = companyRepository.findById(companyId);
-		Optional<Employee> employee = employeeRepository.findById(employeeDto.getId());
+		Company company = companyRepository.findById(companyId).get();
 		
+		company.addEmployee(employee);
+		employeeRepository.save(employee);
 		
-		if (!company.isEmpty() && !employee.isEmpty()) {
-			
-			
-			List<Employee> employees = company.get().getEmployees();
-			employee.get().setCompany(company.get());
-			employees.add(employee.get());
-			
-			
-			company.get().setEmployees(employees);
-			
-			return companyRepository.save(company.get());
-			
-			
-		} else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return company;
 		
 	}
 	
 	@Transactional
-	public void deleteEmployeeFromCompany(long id, long eid) {
+	public Company deleteEmployeeFromCompany(long id, long eid) {
 		
-		Optional<Company> company = companyRepository.findById(id);
-		Optional<Employee> employee = employeeRepository.findById(eid);
+		Company company = companyRepository.findById(id).get();
+		Employee employee = employeeRepository.findById(eid).get();
 		
-		if (company.isPresent() && employee.isPresent()) {
-			
-			if(company.get().getEmployees().removeIf(e -> e.getId() == eid)) {
-				employee.get().setCompany(null);
-				employeeRepository.save(employee.get());
-			} else {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-			}
-			
-		}
-		else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+		employee.setCompany(null);
+		company.getEmployees().remove(employee);
+		
+		return company;
 	
 	}
 	
 	@Transactional
-	public Company updateAllEmployeeToCompany(long id, List<EmployeeDto> employeesDto) {
+	public Company updateAllEmployeeToCompany(long id, List<Employee> employees) {
 		
-		Optional<Company> company = companyRepository.findById(id);
+		Company company = companyRepository.findById(id).get();
 		
-		if (company.isPresent()) {
+		company.getEmployees()
+			.forEach(em -> {
+				em.setCompany(null);
+//				employeeRepository.save(em);
+			});
 		
-			company.get().getEmployees().stream()
-				.peek(f -> {
-					Optional<Employee> employee = employeeRepository.findById(f.getId());
-					employee.get().setCompany(null);
-					employeeRepository.save(employee.get());
-					})
-				.collect(Collectors.toList());
-			
-			company.get().setEmployees(new ArrayList<Employee>());
-			
-			List<Employee> employeesData = employeeMapper.employeeDtosToEmployee(employeesDto);
-			
-			employeesData.stream().peek(f -> {
-				Optional<Employee> employee = employeeRepository.findById(f.getId());
-				employee.get().setCompany(company.get());
-				employeeRepository.save(employee.get());
-				
-				company.get().getEmployees().add(employee.get());
-			}).collect(Collectors.toList());
-			
-			return companyRepository.save(company.get());
-		}
-		else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+		company.getEmployees().clear();
+		
+		employees.forEach(em -> {
+			company.addEmployee(em);
+			employeeRepository.save(em);
+		});
+		
+		return company;
 		
 	}
 	

@@ -78,6 +78,14 @@ public class Company {
 		this.employees = employees;
 	}
 	
+	public void addEmployee(Employee employee) {
+		
+		if(this.employees == null)
+			this.employees = new ArrayList<>();
+		
+		this.employees.add(employee);
+		employee.setCompany(this);
+	}
 	
 	
 	

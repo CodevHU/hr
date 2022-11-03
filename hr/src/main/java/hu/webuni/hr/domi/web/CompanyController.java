@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import hu.webuni.hr.domi.dto.CompanyDto;
 import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.CompanyMapper;
+import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Company;
 import hu.webuni.hr.domi.service.CompanyService;
 import hu.webuni.hr.domi.service.EmployeeService;
@@ -38,6 +39,9 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private EmployeeMapper employeeMapper;
 
 	@GetMapping
 	public List<CompanyDto> getCompanies(@RequestParam Optional<Boolean> full) {
@@ -85,7 +89,7 @@ public class CompanyController {
 	@PostMapping("/{id}/employees")
 	public CompanyDto addEmployeeToCompany(@RequestBody EmployeeDto employee, @PathVariable int id) {
 
-		Company company = companyService.addEmployeeToCompany(id, employee);
+		Company company = companyService.addEmployeeToCompany(id,  employeeMapper.employeeDtoToEmployee(employee));
 		
 		return companyMapper.companyToDto(company);
 
@@ -102,7 +106,7 @@ public class CompanyController {
 	@PutMapping("/{id}/employees")
 	public CompanyDto changeAllEmployeeInCompany(@PathVariable int id, @RequestBody List<EmployeeDto> employees){
 		
-		Company company = companyService.updateAllEmployeeToCompany(id, employees);
+		Company company = companyService.updateAllEmployeeToCompany(id, employeeMapper.employeeDtosToEmployee(employees));
 		return companyMapper.companyToDto(company);
 		
 	}
