@@ -3,24 +3,28 @@ package hu.webuni.hr.domi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.webuni.hr.domi.model.CompanyType;
+
 public class CompanyDto {
 	
 	private long id;
 	private String registrationNumber;
 	private String name;
 	private String address;
+	private CompanyType companyType;
 	
 	List<EmployeeDto> employees = new ArrayList<>();
 	
 	public CompanyDto() {		
 	}
 	
-	public CompanyDto(long id, String registrationNumber, String name, String address, List<EmployeeDto> employees) {
+	public CompanyDto(long id, String registrationNumber, String name, String address, CompanyType companyType, List<EmployeeDto> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
 		this.employees = employees;
+		this.companyType = companyType;
 	}
 	
 	public long getId() {
@@ -62,6 +66,15 @@ public class CompanyDto {
 	public void setEmployees(List<EmployeeDto> employees) {
 		this.employees = employees;
 	}
+
+	public CompanyType getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(CompanyType companyType) {
+		this.companyType = companyType;
+	}
+	
 	
 	
 }

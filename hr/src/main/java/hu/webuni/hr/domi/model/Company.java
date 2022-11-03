@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,20 +25,27 @@ public class Company {
 	private String name;
 	private String address;
 	
+	@Enumerated
+	private CompanyType companyType;
+	
 	@OneToMany(mappedBy = "company")
 	List<Employee> employees = new ArrayList<>();
 	
 	public Company() {		
 	}
 	
-	public Company(long id, String registrationNumber, String name, String address, List<Employee> employees) {
+
+	
+	public Company(long id, String registrationNumber, String name, String address, CompanyType companyType,
+			List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
+		this.companyType = companyType;
 		this.employees = employees;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -86,6 +94,16 @@ public class Company {
 		this.employees.add(employee);
 		employee.setCompany(this);
 	}
+
+	public CompanyType getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(CompanyType companyType) {
+		this.companyType = companyType;
+	}
+	
+	
 	
 	
 	
