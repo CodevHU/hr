@@ -17,7 +17,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	List<Company> findAllByEmployeesPayGreaterThan(int salary);
 	
-	@Query(value = "SELECT e.workPosition as workPosition, AVG(e.pay) as avgSalary FROM Employee AS e LEFT JOIN Company AS c ON e.company = c.id WHERE c.id = ?1 GROUP BY e.workPosition ORDER BY avgSalary DESC") 
+	@Query(value = "SELECT e.position as position, AVG(e.pay) as avgSalary FROM Employee AS e LEFT JOIN Company AS c ON e.company = c.id WHERE c.id = ?1 GROUP BY e.position ORDER BY avgSalary DESC") 
 	List<EmployeeSalaryAvg> getAvgByInterface(long companyId);
 
 	@Query(value = "SELECT c FROM Company AS c FULL JOIN Employee AS e ON c.id = e.company GROUP BY c.id HAVING COUNT(*) >= ?1")

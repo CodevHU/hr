@@ -2,11 +2,15 @@ package hu.webuni.hr.domi.dto;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import hu.webuni.hr.domi.model.Company;
+import hu.webuni.hr.domi.model.Position;
 
 public class EmployeeDto {
 
@@ -15,9 +19,6 @@ public class EmployeeDto {
 	@NotBlank
 	private String name;
 	
-	@NotBlank
-	private String workPosition;
-	
 	@Min(0)
 	private int pay;
 
@@ -25,16 +26,33 @@ public class EmployeeDto {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime firstWorkingDay;
 	
+	@ManyToOne 
+	Company company;
+	
+	@NotBlank
+	private Position position;
+	
 	public EmployeeDto() {
 		
 	}
 	
-	public EmployeeDto(long id, String name, String workPosition, int pay, LocalDateTime firstWorkingDay) {
+	public EmployeeDto(long id, String name, Position position, int pay, LocalDateTime firstWorkingDay) {
 		this.id = id;
 		this.name = name;
-		this.workPosition = workPosition;
+		this.position = position;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
+	}
+	
+	public EmployeeDto(long id, @NotBlank String name, @NotBlank Position position, @Min(0) int pay,
+			@Past LocalDateTime firstWorkingDay, Company company) {
+
+		this.id = id;
+		this.name = name;
+		this.position = position;
+		this.pay = pay;
+		this.firstWorkingDay = firstWorkingDay;
+		this.company = company;
 	}
 
 	public long getId() {
@@ -45,8 +63,8 @@ public class EmployeeDto {
 		return name;
 	}
 
-	public String getWorkPosition() {
-		return workPosition;
+	public Position getWorkPosition() {
+		return position;
 	}
 
 	public int getPay() {
@@ -65,8 +83,8 @@ public class EmployeeDto {
 		this.name = name;
 	}
 
-	public void setWorkPosition(String workPosition) {
-		this.workPosition = workPosition;
+	public void setWorkPosition(Position workPosition) {
+		this.position = workPosition;
 	}
 
 	public void setPay(int pay) {

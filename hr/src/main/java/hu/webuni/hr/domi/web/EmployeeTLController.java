@@ -19,11 +19,11 @@ public class EmployeeTLController {
 	private List<Employee> allEmployees = new ArrayList<>();
 
 	{
-		allEmployees.add(new Employee(1, "Kóst Elek", "CEO", 1000000, LocalDateTime.of(2010, 1, 14, 10, 34)));
-		allEmployees.add(new Employee(2, "Lapos Elemér", "Coordinator", 200000, LocalDateTime.of(2014, 1, 14, 10, 34)));
-		allEmployees.add(new Employee(3, "Lusta Gyula", "Manager", 300000, LocalDateTime.of(2018, 1, 14, 10, 34)));
+		allEmployees.add(new Employee(1, "Kóst Elek", null, 1000000, LocalDateTime.of(2010, 1, 14, 10, 34)));
+		allEmployees.add(new Employee(2, "Lapos Elemér", null, 200000, LocalDateTime.of(2014, 1, 14, 10, 34)));
+		allEmployees.add(new Employee(3, "Lusta Gyula", null, 300000, LocalDateTime.of(2018, 1, 14, 10, 34)));
 		allEmployees
-				.add(new Employee(4, "Kiss Zoltán", "Project Manager", 800000, LocalDateTime.of(2020, 1, 14, 10, 34)));
+				.add(new Employee(4, "Kiss Zoltán", null, 800000, LocalDateTime.of(2020, 1, 14, 10, 34)));
 
 	}
 

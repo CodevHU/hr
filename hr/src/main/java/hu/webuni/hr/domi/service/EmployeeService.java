@@ -3,6 +3,9 @@ package hu.webuni.hr.domi.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import hu.webuni.hr.domi.model.Employee;
 
 public interface EmployeeService {
@@ -17,13 +20,13 @@ public interface EmployeeService {
 
 	void update(long id, Employee employee);
 
-	List<Employee> filterByPay(int pay);
+	Page<Employee> filterByPay(int pay, Pageable paging);
 
-	List<Employee> filterByWorkPosition(String workPosition);
+	Page<Employee> filterByWorkPosition(String workPosition, Pageable paging);
 
-	List<Employee> filterByNameFirstCharacter(char firstChar);
+	Page<Employee> filterByNameFirstCharacter(char firstChar, Pageable paging);
 
-	List<Employee> filterByFirstWorkDay(LocalDateTime startDate, LocalDateTime endDate);
+	Page<Employee> filterByFirstWorkDay(LocalDateTime startDate, LocalDateTime endDate, Pageable paging);
 
 	public Employee findById(long id);
 	

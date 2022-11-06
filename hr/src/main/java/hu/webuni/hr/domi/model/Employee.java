@@ -2,11 +2,13 @@ package hu.webuni.hr.domi.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -23,9 +25,6 @@ public class Employee {
 	@NotBlank
 	private String name;
 	
-	@NotBlank
-	private String workPosition;
-	
 	@Min(0)
 	private int pay;
 
@@ -33,31 +32,35 @@ public class Employee {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime firstWorkingDay;
 	
-	@ManyToOne 
+	@ManyToOne
 	Company company;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	Position position;
+	
 	
 	public Employee() {
 		
 	}
 	
-	public Employee(long id, @NotBlank String name, @NotBlank String workPosition, @Min(0) int pay,
+	public Employee(long id, @NotBlank String name, Position workPosition, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay) {
 
 		this.id = id;
 		this.name = name;
-		this.workPosition = workPosition;
+		this.position = workPosition;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 	}
 	
 	
 
-	public Employee(long id, @NotBlank String name, @NotBlank String workPosition, @Min(0) int pay,
+	public Employee(long id, @NotBlank String name, Position workPosition, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay, Company company) {
 
 		this.id = id;
 		this.name = name;
-		this.workPosition = workPosition;
+		this.position = workPosition;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 		this.company = company;
@@ -79,8 +82,8 @@ public class Employee {
 		return name;
 	}
 
-	public String getWorkPosition() {
-		return workPosition;
+	public Position getWorkPosition() {
+		return position;
 	}
 
 	public int getPay() {
@@ -99,8 +102,8 @@ public class Employee {
 		this.name = name;
 	}
 
-	public void setWorkPosition(String workPosition) {
-		this.workPosition = workPosition;
+	public void setWorkPosition(Position workPosition) {
+		this.position = workPosition;
 	}
 
 	public void setPay(int pay) {

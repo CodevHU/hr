@@ -1,8 +1,9 @@
 package hu.webuni.hr.domi.repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,16 +12,16 @@ import hu.webuni.hr.domi.model.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	List<Employee> findByPayGreaterThan(int pay);
+	Page<Employee> findByPayGreaterThan(int pay, Pageable pageable);
 
-	List<Employee> findByNameLikeIgnoreCase(String string);
+	Page<Employee> findByNameLikeIgnoreCase(String string, Pageable pageable);
 
-	List<Employee> findByFirstWorkingDayBetween(LocalDateTime from, LocalDateTime to);
-
-	List<Employee> findByWorkPosition(String workPosition);
+	Page<Employee> findByFirstWorkingDayBetween(LocalDateTime from, LocalDateTime to, Pageable page);
 
 	@Modifying
     @Query(value = "truncate table employee CASCADE", nativeQuery = true)
 	void truncateEmployees();
+
+	Page<Employee> findByWorkPosition(String workPosition, Pageable page);
 
 }

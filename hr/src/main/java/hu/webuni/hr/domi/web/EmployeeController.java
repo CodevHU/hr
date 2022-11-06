@@ -1,11 +1,16 @@
 package hu.webuni.hr.domi.web;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.repository.EmployeeRepository;
 import hu.webuni.hr.domi.service.EmployeeService;
 
 @RestController
@@ -32,6 +38,9 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeMapper employeeMapper;
+	
+	@Autowired
+	EmployeeRepository employeeRepository;
 
 	@GetMapping
 	public List<EmployeeDto> getAll() {
@@ -49,32 +58,67 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/filter")
-	public List<EmployeeDto> getFilterListByPay(@RequestParam(required = false, name = "pay") Integer pay,
+	public Map<String,Object> getFilterListByPay(@RequestParam(required = false, name = "pay") Integer pay,
 			@RequestParam(required = false, name = "work_position") String workPosition,
 			@RequestParam(required = false, name = "first_character") String firstCharacter,
 			@RequestParam(required = false, name = "from") String from,
-			@RequestParam(required = false, name = "to") String to) {
+			@RequestParam(required = false, name = "to") String to,
+			@RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "3") int size
+	        ) {
+		
+		Pageable paging = PageRequest.of(page, size);
 
 		if (pay != null) {
-			List<EmployeeDto> filteredEmployees = employeeMapper.employeeToDtos(employeeService.filterByPay(pay));
-			return filteredEmployees;
+			Page<Employee> filteredEmployees = employeeService.filterByPay(pay, paging);
+
+			Map<String, Object> response = new HashMap<>();
+		      response.put("employees", employeeMapper.employeeToDtos(filteredEmployees.getContent()));
+		      response.put("currentPage", filteredEmployees.getNumber());
+		      response.put("totalItems", filteredEmployees.getTotalElements());
+		      response.put("totalPages", filteredEmployees.getTotalPages());
+		      
+			return response;
 
 		} else if (workPosition != null) {
-			List<EmployeeDto> filteredEmployees = employeeMapper
-					.employeeToDtos(employeeService.filterByWorkPosition(workPosition));
-			return filteredEmployees;
+			
+			Page<Employee> filteredEmployees = employeeService.filterByWorkPosition(workPosition, paging);
+
+			Map<String, Object> response = new HashMap<>();
+		      response.put("employees", employeeMapper.employeeToDtos(filteredEmployees.getContent()));
+		      response.put("currentPage", filteredEmployees.getNumber());
+		      response.put("totalItems", filteredEmployees.getTotalElements());
+		      response.put("totalPages", filteredEmployees.getTotalPages());
+		      
+			return response;
+			
 		} else if (firstCharacter != null) {
-			List<EmployeeDto> filteredEmployees = employeeMapper
-					.employeeToDtos(employeeService.filterByNameFirstCharacter(firstCharacter.charAt(0)));
-			return filteredEmployees;
+
+			Page<Employee> result = employeeService.filterByNameFirstCharacter(firstCharacter.charAt(0),paging);
+			
+			Map<String, Object> response = new HashMap<>();
+		      response.put("employees", employeeMapper.employeeToDtos(result.getContent()));
+		      response.put("currentPage", result.getNumber());
+		      response.put("totalItems", result.getTotalElements());
+		      response.put("totalPages", result.getTotalPages());
+			
+			return response;
+			
+		
 		} else if (from != null && to != null) {
 			
 			LocalDateTime startDate = LocalDateTime.parse(from);
 			LocalDateTime endDate = LocalDateTime.parse(to);
 			
-			List<EmployeeDto> filteredEmployees = employeeMapper
-					.employeeToDtos(employeeService.filterByFirstWorkDay(startDate, endDate));
-			return filteredEmployees;
+			Page<Employee> filteredEmployees = employeeService.filterByFirstWorkDay(startDate, endDate, paging);
+
+			Map<String, Object> response = new HashMap<>();
+		      response.put("employees", employeeMapper.employeeToDtos(filteredEmployees.getContent()));
+		      response.put("currentPage", filteredEmployees.getNumber());
+		      response.put("totalItems", filteredEmployees.getTotalElements());
+		      response.put("totalPages", filteredEmployees.getTotalPages());
+		      
+			return response; 
 		} else
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 

@@ -45,7 +45,7 @@ public class EmployeeControllerTestIT {
 	void testThanPostEmployeeIsChanged() throws Exception {
 		
 		List<EmployeeDto> employeesBefore = getAllEmployees();
-		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", "CEO", 2000000, LocalDateTime.of(2000, 1, 14, 10, 34));
+		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", null, 2000000, LocalDateTime.of(2000, 1, 14, 10, 34));
 		
 		postEmployee(newEmploye);
 		
@@ -62,7 +62,7 @@ public class EmployeeControllerTestIT {
 	@Test
 	void testThenPostEmployeeNegativePayException() throws Exception {
 		
-		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", "CEO", -2000000, LocalDateTime.of(2000, 1, 14, 10, 34));
+		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", null, -2000000, LocalDateTime.of(2000, 1, 14, 10, 34));
 		
 		assertThat(webTestClient
 				.post()
@@ -77,7 +77,7 @@ public class EmployeeControllerTestIT {
 	@Test
 	void testThenPostEmployeeWithNotPastFirstWorkDayException() throws Exception {
 		
-		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", "CEO", 2000000, LocalDateTime.of(3000, 1, 14, 10, 34));
+		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", null, 2000000, LocalDateTime.of(3000, 1, 14, 10, 34));
 		
 		assertThat(webTestClient
 				.post()
@@ -93,7 +93,7 @@ public class EmployeeControllerTestIT {
 	void testThenPutEmployeeWithNonExistentIdException() throws Exception {
 		
 		List<EmployeeDto> employeesBefore = getAllEmployees();
-		EmployeeDto employe = new EmployeeDto(employeesBefore.size() + 1, "Kóst Elemér", "CEO", 2000000, LocalDateTime.of(3000, 1, 14, 10, 34));
+		EmployeeDto employe = new EmployeeDto(employeesBefore.size() + 1, "Kóst Elemér", null, 2000000, LocalDateTime.of(3000, 1, 14, 10, 34));
 		
 		assertThat(webTestClient
 				.put()
