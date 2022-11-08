@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
 @Entity
 public class Company {
 	
-	public enum CompanyType {BT,KFT,ZRT,NYRT}
+//	public enum CompanyType {BT,KFT,ZRT,NYRT}
 	
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -25,7 +24,7 @@ public class Company {
 	private String name;
 	private String address;
 	
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	private CompanyType companyType;
 	
 	@OneToMany(mappedBy = "company")
@@ -36,13 +35,12 @@ public class Company {
 	
 
 	
-	public Company(long id, String registrationNumber, String name, String address, CompanyType companyType,
+	public Company(long id, String registrationNumber, String name, String address,
 			List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
-		this.companyType = companyType;
 		this.employees = employees;
 	}
 

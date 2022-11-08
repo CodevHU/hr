@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.OneToMany;
 
 import hu.webuni.hr.domi.model.Employee;
-import hu.webuni.hr.domi.model.Company.CompanyType;
 
 public class CompanyDto {
 	
@@ -14,7 +13,6 @@ public class CompanyDto {
 	private String registrationNumber;
 	private String name;
 	private String address;
-	private CompanyType companyType;
 	
 	@OneToMany(mappedBy = "company")
 	List<Employee> employees = new ArrayList<>();
@@ -23,13 +21,12 @@ public class CompanyDto {
 	public CompanyDto() {		
 	}
 	
-	public CompanyDto(long id, String registrationNumber, String name, String address, CompanyType companyType, List<Employee> employees) {
+	public CompanyDto(long id, String registrationNumber, String name, String address, List<Employee> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
 		this.employees = employees;
-		this.companyType = companyType;
 	}
 	
 	public long getId() {
@@ -70,14 +67,6 @@ public class CompanyDto {
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
-	}
-
-	public CompanyType getCompanyType() {
-		return companyType;
-	}
-
-	public void setCompanyType(CompanyType companyType) {
-		this.companyType = companyType;
 	}
 	
 	

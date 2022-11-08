@@ -163,7 +163,7 @@ public class CompanyService {
 	
 	
 	private Company createCompanyWithoutEmployees(Company c) {
-		return new Company(c.getId(), c.getRegistrationNumber(), c.getName(), c.getAddress(), c.getCompanyType(), null);
+		return new Company(c.getId(), c.getRegistrationNumber(), c.getName(), c.getAddress(), null);
 	}
 
 	

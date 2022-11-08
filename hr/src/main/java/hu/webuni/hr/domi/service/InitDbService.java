@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.webuni.hr.domi.model.Company;
-import hu.webuni.hr.domi.model.Company.CompanyType;
+//import hu.webuni.hr.domi.model.Company.CompanyType;
 import hu.webuni.hr.domi.model.Employee;
 import hu.webuni.hr.domi.model.Position;
 import hu.webuni.hr.domi.model.Position.Qualification;
@@ -47,7 +47,7 @@ public class InitDbService{
 		firstCompanyEmployees.add(new Employee(3,"Juhász István",manager,300000,LocalDateTime.of(2018, 1, 14, 10, 34)));
 		firstCompanyEmployees.add(new Employee(4,"Kiss Zoltán",projectManager,800000,LocalDateTime.of(2020, 1, 14, 10, 34)));
 		
-		Company firstCompany = new Company(0L,"3233222-2-5","Első cég Kft.","1111 Budapest, Első utca 3.",CompanyType.KFT,firstCompanyEmployees);
+		Company firstCompany = new Company(0L,"3233222-2-5","Első cég Kft.","1111 Budapest, Első utca 3.",firstCompanyEmployees);
 		companyRepository.save(firstCompany);
 		
 		firstCompanyEmployees.forEach(em -> {
@@ -61,7 +61,7 @@ public class InitDbService{
 		secondCompanyEmployees.add(new Employee(2,"Varga Elemér",coordinator,60000,LocalDateTime.of(2010, 1, 14, 10, 34)));
 		secondCompanyEmployees.add(new Employee(3,"Fekete Gyula",manager,80000,LocalDateTime.of(2016, 1, 14, 10, 34)));
 		
-		Company secondCompany = new Company(0L,"2253222-2-12","Második cég Kft.","1111 Budapest, Második utca 6.",CompanyType.KFT,secondCompanyEmployees);
+		Company secondCompany = new Company(0L,"2253222-2-12","Második cég Kft.","1111 Budapest, Második utca 6.",secondCompanyEmployees);
 		companyRepository.save(secondCompany);
 		
 		secondCompanyEmployees.forEach(em -> {
@@ -73,7 +73,7 @@ public class InitDbService{
 		thirdCompanyEmployees.add(new Employee(3,"Németh Gyula",manager,190000,LocalDateTime.of(1999, 1, 14, 10, 34)));
 		thirdCompanyEmployees.add(new Employee(4,"Lakatos Zoltán",projectManager,400000,LocalDateTime.of(2000, 1, 14, 10, 34)));
 		
-		Company thirdCompany = new Company(0L,"2253222-2-12","Harmadik cég Bt.","1111 Budapest, Harmadik utca 12.",CompanyType.BT,thirdCompanyEmployees);
+		Company thirdCompany = new Company(0L,"2253222-2-12","Harmadik cég Bt.","1111 Budapest, Harmadik utca 12.",thirdCompanyEmployees);
 		companyRepository.save(thirdCompany);
 		
 		thirdCompanyEmployees.forEach(em -> {
