@@ -101,6 +101,13 @@ public class EmployeeDto {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
+
+	@Override
+	public String toString() {
+		return "EmployeeDto [id=" + id + ", name=" + name + ", pay=" + pay + ", firstWorkingDay=" + firstWorkingDay
+				+ ", company=" + company + ", position=" + position + "]";
+	}
+	
 	
 	
 	

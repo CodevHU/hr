@@ -100,6 +100,16 @@ public class Company {
 	public void setCompanyType(CompanyType companyType) {
 		this.companyType = companyType;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Company [id=" + id + ", registrationNumber=" + registrationNumber + ", name=" + name + ", address="
+				+ address + ", companyType=" + companyType + ", employees=" + employees + "]";
+	}
+	
+	
 	
 	
 	

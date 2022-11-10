@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import hu.webuni.hr.domi.model.CompanyType;
-import hu.webuni.hr.domi.model.Employee;
 
 public class CompanyDto {
 	
@@ -17,7 +16,7 @@ public class CompanyDto {
 	private String address;
 	
 	@OneToMany(mappedBy = "company")
-	List<Employee> employees = new ArrayList<>();
+	List<EmployeeDto> employees = new ArrayList<>();
 	
 	@ManyToOne
 	private CompanyType companyType;
@@ -26,7 +25,7 @@ public class CompanyDto {
 	public CompanyDto() {		
 	}
 	
-	public CompanyDto(long id, String registrationNumber, String name, String address, List<Employee> employees) {
+	public CompanyDto(long id, String registrationNumber, String name, String address, List<EmployeeDto> employees) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
@@ -50,11 +49,11 @@ public class CompanyDto {
 		return name;
 	}
 
-	public String getAddress() {
+	public String getAddress() { 
 		return address;
 	}
 
-	public List<Employee> getEmployees() {
+	public List<EmployeeDto> getEmployees() {
 		return employees;
 	}
 
@@ -70,7 +69,7 @@ public class CompanyDto {
 		this.address = address;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(List<EmployeeDto> employees) {
 		this.employees = employees;
 	}
 
@@ -81,6 +80,14 @@ public class CompanyDto {
 	public void setCompanyType(CompanyType companyType) {
 		this.companyType = companyType;
 	}
+
+	@Override
+	public String toString() {
+		return "CompanyDto [id=" + id + ", registrationNumber=" + registrationNumber + ", name=" + name + ", address="
+				+ address + ", employees=" + employees + ", companyType=" + companyType + "]";
+	}
+	
+	
 
 	
 

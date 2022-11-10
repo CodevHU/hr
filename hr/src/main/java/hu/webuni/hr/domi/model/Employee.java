@@ -112,4 +112,12 @@ public class Employee {
 		this.firstWorkingDay = firstWorkingDay;
 	}
 
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", pay=" + pay + ", firstWorkingDay=" + firstWorkingDay
+				+ ", company=" + id + ", position=" + position + "]";
+	}
+	
+	
+
 }

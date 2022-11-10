@@ -47,11 +47,10 @@ public class CompanyController {
 	@GetMapping
 	public List<CompanyDto> getCompanies(@RequestParam Optional<Boolean> full) {
 
-		System.out.println(full.orElseThrow());
-		if (full.orElseThrow()) {
-			return companyMapper.companyToDtos(companyService.getCompaniesWithEmployees());
+		if (full.orElse(false)) {
+			return companyService.getCompaniesWithEmployees();
 		} else {
-			return companyMapper.companyToDtos(companyService.getCompaniesWithoutEmployees());
+			return companyService.getCompaniesWithoutEmployees();
 		}
 	}
 	

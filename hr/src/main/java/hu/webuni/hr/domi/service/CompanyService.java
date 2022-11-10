@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import hu.webuni.hr.domi.dto.CompanyDto;
+import hu.webuni.hr.domi.mapper.CompanyMapper;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Company;
 import hu.webuni.hr.domi.model.Employee;
@@ -29,21 +31,20 @@ public class CompanyService {
 	@Autowired
 	EmployeeMapper employeeMapper;
 	
+	@Autowired
+	CompanyMapper companyMapper;
 	
-	public List<Company> getCompaniesWithEmployees() {
-//		List<Company> companiesWithoutEmployees = companyRepository.findAllWithEmployees();
-		return companyRepository.findAll();
+	
+	public List<CompanyDto> getCompaniesWithEmployees() {
+		List<Company> employees = companyRepository.findAll();
 		
-//		return companiesWithoutEmployees;
+		return companyMapper.companiesToDtos(employees);
 	}
 	
-	public List<Company> getCompaniesWithoutEmployees() {
+	public List<CompanyDto> getCompaniesWithoutEmployees() {
+		List<Company> employees = companyRepository.findAll();
 		
-		List<Company> companiesWithoutEmployees = companyRepository.findAll().stream().map(c -> createCompanyWithoutEmployees(c)).collect(Collectors.toList());
-		
-//		List<Company> companiesWithoutEmployees = companyRepository.findAllWithEmployees();
-				
-		return companiesWithoutEmployees;
+		return companyMapper.companiesToSummaryDtos(employees);
 	}
 	
 	public Optional<Company> getById(long id) {
@@ -164,11 +165,6 @@ public class CompanyService {
 	
 	public List<Company> getCompaniesWhereTheEmployeesCountIsGreaterThanParam(Long employeeCount) {
 		return companyRepository.findCompaniesWhereTheEmployeesCountIsGreaterThanParam(employeeCount);
-	}
-	
-	
-	private Company createCompanyWithoutEmployees(Company c) {
-		return new Company(c.getId(), c.getRegistrationNumber(), c.getName(), c.getAddress(), null);
 	}
 
 	
