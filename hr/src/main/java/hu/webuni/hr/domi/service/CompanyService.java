@@ -36,7 +36,8 @@ public class CompanyService {
 	
 	
 	public List<CompanyDto> getCompaniesWithEmployees() {
-		List<Company> employees = companyRepository.findAll();
+//		List<Company> employees = companyRepository.findAll();
+		List<Company> employees = companyRepository.findAllWithEmployees();
 		
 		return companyMapper.companiesToDtos(employees);
 	}

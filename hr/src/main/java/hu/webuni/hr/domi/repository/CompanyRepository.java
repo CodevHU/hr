@@ -2,6 +2,7 @@ package hu.webuni.hr.domi.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +24,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	@Query(value = "SELECT c FROM Company AS c FULL JOIN Employee AS e ON c.id = e.company GROUP BY c.id HAVING COUNT(*) >= ?1")
 	List<Company> findCompaniesWhereTheEmployeesCountIsGreaterThanParam(Long employeeCount);
 
-	//@EntityGraph(attributePaths = "employees")
+	@EntityGraph("Company.full")
 	@Query("SELECT c FROM Company c")
 	List<Company> findAllWithEmployees();
 

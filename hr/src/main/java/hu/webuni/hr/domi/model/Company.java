@@ -8,10 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 
 
 @Entity
+@NamedEntityGraph(
+		name = "Company.full",
+		attributeNodes = {
+				@NamedAttributeNode("employees"),
+				@NamedAttributeNode("companyType")
+		}
+)
 public class Company {
 	
 //	public enum CompanyType {BT,KFT,ZRT,NYRT}
