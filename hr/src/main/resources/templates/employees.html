@@ -12,7 +12,7 @@
 		<tr th:each="employee: ${employees}">
 			<td th:text="${employee.identifier}">ID</td>
 			<td><a th:href="@{'/employees/' + ${employee.identifier} }" th:text="${employee.name}">name</a></td>
-			<td th:text="${employee.workPosition}">workPosition</td>
+			<td th:text="${employee.position}">position</td>
 			<td th:text="${employee.pay}">pay</td>
 			<td th:text="${employee.firstWorkingDay}">firstWorkingDay</td>
 			<td><a th:href="@{/employees/delete/{id}(id=${employee.identifier})}">Delete</a></td>
@@ -22,7 +22,7 @@
 	<form th:action="@{/employees}" method="post" th:object="${newEmployee}">
 		ID: <input type="text" th:field="*{identifier}"/> <br/>
 		name: <input type="text" th:field="*{name}"/> <br/>
-		workPosition: <input type="text" th:field="*{workPosition}"/> <br/>
+		workPosition: <input type="text" th:field="*{position}"/> <br/>
 		pay: <input type="text" th:field="*{pay}"/> <br/>
 		firstWorkingDay: <input type="datetime-local" th:field="*{firstWorkingDay}"/> <br/>
 		<input type="submit" value="Add" />

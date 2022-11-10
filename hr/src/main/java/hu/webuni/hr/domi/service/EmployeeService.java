@@ -22,7 +22,7 @@ public interface EmployeeService {
 
 	Page<Employee> filterByPay(int pay, Pageable paging);
 
-	Page<Employee> filterByWorkPosition(String workPosition, Pageable paging);
+	Page<Employee> filterByPosition(String position, Pageable paging);
 
 	Page<Employee> filterByNameFirstCharacter(char firstChar, Pageable paging);
 

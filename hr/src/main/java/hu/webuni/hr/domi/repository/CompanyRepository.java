@@ -23,6 +23,10 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	@Query(value = "SELECT c FROM Company AS c FULL JOIN Employee AS e ON c.id = e.company GROUP BY c.id HAVING COUNT(*) >= ?1")
 	List<Company> findCompaniesWhereTheEmployeesCountIsGreaterThanParam(Long employeeCount);
 
+	//@EntityGraph(attributePaths = "employees")
+	@Query("SELECT c FROM Company c")
+	List<Company> findAllWithEmployees();
+
 	
 
 	

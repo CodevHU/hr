@@ -3,8 +3,10 @@ package hu.webuni.hr.domi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import hu.webuni.hr.domi.model.CompanyType;
 import hu.webuni.hr.domi.model.Employee;
 
 public class CompanyDto {
@@ -16,6 +18,9 @@ public class CompanyDto {
 	
 	@OneToMany(mappedBy = "company")
 	List<Employee> employees = new ArrayList<>();
+	
+	@ManyToOne
+	private CompanyType companyType;
 	
 	
 	public CompanyDto() {		
@@ -68,6 +73,18 @@ public class CompanyDto {
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
+
+	public CompanyType getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(CompanyType companyType) {
+		this.companyType = companyType;
+	}
+
+	
+
+	
 	
 	
 	

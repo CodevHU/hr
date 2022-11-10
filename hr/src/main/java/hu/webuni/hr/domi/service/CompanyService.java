@@ -30,13 +30,18 @@ public class CompanyService {
 	EmployeeMapper employeeMapper;
 	
 	
-	public List<Company> getCompaniesWithoutEmployees() {
+	public List<Company> getCompaniesWithEmployees() {
+//		List<Company> companiesWithoutEmployees = companyRepository.findAllWithEmployees();
 		return companyRepository.findAll();
+		
+//		return companiesWithoutEmployees;
 	}
 	
-	public List<Company> getCompaniesWithEmployees() {
+	public List<Company> getCompaniesWithoutEmployees() {
 		
 		List<Company> companiesWithoutEmployees = companyRepository.findAll().stream().map(c -> createCompanyWithoutEmployees(c)).collect(Collectors.toList());
+		
+//		List<Company> companiesWithoutEmployees = companyRepository.findAllWithEmployees();
 				
 		return companiesWithoutEmployees;
 	}

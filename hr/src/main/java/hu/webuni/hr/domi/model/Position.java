@@ -1,11 +1,12 @@
 package hu.webuni.hr.domi.model;
 
+import java.util.List;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 @Embeddable
@@ -19,16 +20,23 @@ public class Position {
 
 	private String positionName;
 	
-	@Enumerated(EnumType.STRING)
 	private Qualification minQualification;
 	
 	private int minSalary;
+	
+	@OneToMany(mappedBy = "position")
+	private List<Employee> employees;
 	
 	
 	public Position(){
 	}
 	
 
+	public Position(String positionName, Qualification minQualification) {
+		this.positionName = positionName;
+		this.minQualification = minQualification;
+	}
+	
 	public Position(long id, String positionName, Qualification minQualification, int minSalary) {
 		this.id = id;
 		this.positionName = positionName;
@@ -67,6 +75,17 @@ public class Position {
 	public void setMinSalary(int minSalary) {
 		this.minSalary = minSalary;
 	}
+
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+	
 	
 	
 	

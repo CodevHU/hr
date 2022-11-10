@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import hu.webuni.hr.domi.dto.EmployeeDto;
@@ -15,6 +16,8 @@ public interface EmployeeMapper {
 
 	List<EmployeeDto> employeeToDtos(List<Employee> employees);
 
+	@Mapping(target = "company.employees", ignore = true)
+	@Mapping(target = "position.employees", ignore = true)
 	EmployeeDto employeeToDto(Employee employee);
 
 	Employee employeeDtoToEmployee(@Valid EmployeeDto employee);

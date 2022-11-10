@@ -22,6 +22,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(value = "truncate table employee CASCADE", nativeQuery = true)
 	void truncateEmployees();
 
-	Page<Employee> findByWorkPosition(String workPosition, Pageable page);
+	Page<Employee> findByPosition(String position, Pageable page);
 
 }

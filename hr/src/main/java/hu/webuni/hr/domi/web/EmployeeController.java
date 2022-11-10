@@ -59,7 +59,7 @@ public class EmployeeController {
 
 	@GetMapping("/filter")
 	public Map<String,Object> getFilterListByPay(@RequestParam(required = false, name = "pay") Integer pay,
-			@RequestParam(required = false, name = "work_position") String workPosition,
+			@RequestParam(required = false, name = "work_position") String position,
 			@RequestParam(required = false, name = "first_character") String firstCharacter,
 			@RequestParam(required = false, name = "from") String from,
 			@RequestParam(required = false, name = "to") String to,
@@ -80,9 +80,9 @@ public class EmployeeController {
 		      
 			return response;
 
-		} else if (workPosition != null) {
+		} else if (position != null) {
 			
-			Page<Employee> filteredEmployees = employeeService.filterByWorkPosition(workPosition, paging);
+			Page<Employee> filteredEmployees = employeeService.filterByPosition(position, paging);
 
 			Map<String, Object> response = new HashMap<>();
 		      response.put("employees", employeeMapper.employeeToDtos(filteredEmployees.getContent()));

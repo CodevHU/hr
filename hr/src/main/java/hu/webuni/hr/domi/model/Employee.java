@@ -2,13 +2,11 @@ package hu.webuni.hr.domi.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -35,7 +33,7 @@ public class Employee {
 	@ManyToOne
 	Company company;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	Position position;
 	
 	
@@ -43,24 +41,24 @@ public class Employee {
 		
 	}
 	
-	public Employee(long id, @NotBlank String name, Position workPosition, @Min(0) int pay,
+	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay) {
 
 		this.id = id;
 		this.name = name;
-		this.position = workPosition;
+		this.position = position;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 	}
 	
 	
 
-	public Employee(long id, @NotBlank String name, Position workPosition, @Min(0) int pay,
+	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay, Company company) {
 
 		this.id = id;
 		this.name = name;
-		this.position = workPosition;
+		this.position = position;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 		this.company = company;
@@ -82,7 +80,7 @@ public class Employee {
 		return name;
 	}
 
-	public Position getWorkPosition() {
+	public Position getPosition() {
 		return position;
 	}
 
@@ -102,8 +100,8 @@ public class Employee {
 		this.name = name;
 	}
 
-	public void setWorkPosition(Position workPosition) {
-		this.position = workPosition;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 	public void setPay(int pay) {

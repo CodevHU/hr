@@ -15,7 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.domi.config.HrConfigProperties;
 import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.Position;
 import hu.webuni.hr.domi.repository.EmployeeRepository;
+import hu.webuni.hr.domi.repository.PositionRepository;
 
 @Service
 public abstract class AbstractEmployeeService implements EmployeeService {
@@ -25,11 +27,33 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
+	@Autowired
+	PositionRepository positionRepository;
+	
 
 	@Transactional
 	public Employee save(Employee employee) {
-		
+		clearCompanyAndSetPosition(employee);
 		return employeeRepository.save(employee);
+	}
+	
+	private void clearCompanyAndSetPosition(Employee employee) {
+		employee.setCompany(null);
+		String positionName = employee.getPosition().getPositionName();
+		Position position = null;
+		
+		if(positionName != null) {
+			List<Position> positions = positionRepository.findByPositionName(positionName);
+			
+			if(positions.isEmpty()) {
+				position = positionRepository.save(new Position(positionName, null));
+			} else {
+				position = positions.get(0);
+			}
+			
+			employee.setPosition(position);
+		}
 	}
 
 	
@@ -68,8 +92,10 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	public void update(long id, Employee employee) {
 		
 		employee.setId(id);
-		if(employeeRepository.existsById(employee.getId()))
+		if(employeeRepository.existsById(employee.getId())) {
+			clearCompanyAndSetPosition(employee);
 			employeeRepository.save(employee);
+			}
 		else 
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
@@ -85,8 +111,8 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	}
 	
 	@Override
-	public Page<Employee> filterByWorkPosition(String workPosition, Pageable page){
-		Page<Employee> filteredEmployees = employeeRepository.findByWorkPosition(workPosition, page);
+	public Page<Employee> filterByPosition(String position, Pageable page){
+		Page<Employee> filteredEmployees = employeeRepository.findByPosition(position, page);
 		
 		return filteredEmployees;
 	}
