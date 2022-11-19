@@ -34,8 +34,8 @@ public class InitDbService{
 
 	@Transactional
 	public void clearDB() {
-		employeeRepository.truncateEmployees();		
-		companyRepository.truncateCompanies();		
+//		employeeRepository.truncateEmployees();		
+//		companyRepository.truncateCompanies();		
 	}
 	
 	@Transactional

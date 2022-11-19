@@ -25,3 +25,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    open-in-view: true
