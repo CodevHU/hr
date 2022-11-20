@@ -8,13 +8,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.domi.config.HrConfigProperties;
 import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.Employee_;
 import hu.webuni.hr.domi.model.Position;
 import hu.webuni.hr.domi.repository.EmployeeRepository;
 import hu.webuni.hr.domi.repository.PositionRepository;
@@ -128,6 +132,45 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	public Page<Employee> filterByFirstWorkDay(LocalDateTime startDate, LocalDateTime endDate, Pageable page){
 		Page<Employee> filteredEmployees = employeeRepository.findByFirstWorkingDayBetween(startDate,endDate,page);
 		return filteredEmployees;
+	}
+	
+	@Override
+	public List<Employee> findEmployees(Employee employee) {
+		
+		long id = employee.getId();
+		String name = employee.getName();
+		String position = employee.getPosition().getPositionName();
+		int salary = employee.getPay();
+		LocalDateTime firstWorkDate = employee.getFirstWorkingDay();
+		String companyName = employee.getCompany().getName();
+		
+		Specification<Employee> spec = Specification.where(null);
+		
+		if(id > 0) {
+			spec = spec.and(EmployeeSpecifications.hasId(id));
+		}
+		
+		if(StringUtils.hasText(name)) {
+			spec = spec.and(EmployeeSpecifications.hasName(name));
+		}
+		
+		if(StringUtils.hasText(position)) {
+			spec = spec.and(EmployeeSpecifications.hasPosition(position));
+		}
+		
+		if(salary > 0) {
+			spec = spec.and(EmployeeSpecifications.hasSalary(salary));
+		}
+		
+		if(firstWorkDate != null) {
+			spec = spec.and(EmployeeSpecifications.hasStartWorkingDay(firstWorkDate));
+		}
+		
+		if(StringUtils.hasText(companyName)) {
+			spec = spec.and(EmployeeSpecifications.hasCompanyName(companyName));
+		}
+		
+		return employeeRepository.findAll(spec, Sort.by(Employee_.ID));
 	}
 
 }

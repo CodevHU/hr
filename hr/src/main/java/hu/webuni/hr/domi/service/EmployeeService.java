@@ -29,5 +29,7 @@ public interface EmployeeService {
 	Page<Employee> filterByFirstWorkDay(LocalDateTime startDate, LocalDateTime endDate, Pageable paging);
 
 	public Employee findById(long id);
+
+	List<Employee> findEmployees(Employee employee);
 	
 }
