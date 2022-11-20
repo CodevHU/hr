@@ -66,7 +66,7 @@ public class InitDbService{
 		Employee newEmployee4 = employeeRepository.save(new Employee(3,"Juhász István",manager,300000,LocalDateTime.of(2018, 1, 14, 10, 34)));
 		newEmployee4.setPosition(manager);
 		
-		Employee newEmployee5 = employeeRepository.save(new Employee(4,"Kiss Zoltán",projectManager,800000,LocalDateTime.of(2020, 1, 14, 10, 34)));
+		Employee newEmployee5 = employeeRepository.save(new Employee(4,"Kiss Zoltán",projectManager,76000,LocalDateTime.of(2020, 1, 14, 10, 34)));
 		newEmployee5.setPosition(manager);
 		
 		Company firstCompany = new Company(0L,"3233222-2-5","Első cég Kft.","1111 Budapest, Első utca 3.",null);

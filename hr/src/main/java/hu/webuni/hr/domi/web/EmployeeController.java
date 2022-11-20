@@ -56,6 +56,11 @@ public class EmployeeController {
 		return employeeMapper.employeeToDto(employee);
 
 	}
+	
+	@PostMapping("/filterByExample")
+	public List<EmployeeDto> filterByExample(@RequestBody EmployeeDto employeeExample){
+		return employeeMapper.employeeToDtos(employeeService.findEmployees(employeeMapper.employeeDtoToEmployee(employeeExample)));
+	}
 
 	@GetMapping("/filter")
 	public Map<String,Object> getFilterListByPay(@RequestParam(required = false, name = "pay") Integer pay,

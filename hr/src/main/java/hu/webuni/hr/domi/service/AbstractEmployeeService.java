@@ -139,10 +139,10 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 		
 		long id = employee.getId();
 		String name = employee.getName();
-		String position = employee.getPosition().getPositionName();
+		String position = employee.getPosition() != null ? employee.getPosition().getPositionName() : null;
 		int salary = employee.getPay();
 		LocalDateTime firstWorkDate = employee.getFirstWorkingDay();
-		String companyName = employee.getCompany().getName();
+		String companyName = employee.getCompany() != null ? employee.getCompany().getName() : null;
 		
 		Specification<Employee> spec = Specification.where(null);
 		
