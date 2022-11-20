@@ -26,7 +26,6 @@ import org.springframework.web.server.ResponseStatusException;
 import hu.webuni.hr.domi.dto.EmployeeDto;
 import hu.webuni.hr.domi.mapper.EmployeeMapper;
 import hu.webuni.hr.domi.model.Employee;
-import hu.webuni.hr.domi.repository.EmployeeRepository;
 import hu.webuni.hr.domi.service.EmployeeService;
 
 @RestController
@@ -38,9 +37,6 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeMapper employeeMapper;
-	
-	@Autowired
-	EmployeeRepository employeeRepository;
 
 	@GetMapping
 	public List<EmployeeDto> getAll() {

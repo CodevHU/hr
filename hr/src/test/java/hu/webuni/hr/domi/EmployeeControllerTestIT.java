@@ -13,6 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import hu.webuni.hr.domi.dto.EmployeeDto;
+import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.Position;
+import hu.webuni.hr.domi.model.Position.Qualification;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class EmployeeControllerTestIT {
@@ -44,18 +47,15 @@ public class EmployeeControllerTestIT {
 	@Test
 	void testThanPostEmployeeIsChanged() throws Exception {
 		
-		List<EmployeeDto> employeesBefore = getAllEmployees();
-		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", null, 2000000, LocalDateTime.of(2000, 1, 14, 10, 34));
-		
-		postEmployee(newEmploye);
+		EmployeeDto employee = postEmployee(new EmployeeDto(0, "Kóst Elemér", new Position("Manager",Qualification.GRADUATION),2000000, LocalDateTime.of(2000, 1, 14, 10, 34)));
 		
 		List<EmployeeDto> employeesAfter = getAllEmployees();
 		
-		assertThat(employeesAfter.subList(0, employeesBefore.size()))
+		assertThat(employeesAfter)
 				.usingRecursiveFieldByFieldElementComparator()
-				.containsExactlyElementsOf(employeesBefore);
+				.contains(employee);
 		
-		assertThat(employeesAfter.get(employeesAfter.size() - 1).equals(newEmploye));
+//		assertThat(getEmployee(employee.getId())).equals(employee);
 		
 	}
 	
@@ -93,7 +93,7 @@ public class EmployeeControllerTestIT {
 	void testThenPutEmployeeWithNonExistentIdException() throws Exception {
 		
 		List<EmployeeDto> employeesBefore = getAllEmployees();
-		EmployeeDto employe = new EmployeeDto(employeesBefore.size() + 1, "Kóst Elemér", null, 2000000, LocalDateTime.of(3000, 1, 14, 10, 34));
+		EmployeeDto employe = new EmployeeDto(0L, "Kóst Elemér", null, 2000000, LocalDateTime.of(2002, 1, 14, 10, 34));
 		
 		assertThat(webTestClient
 				.put()
@@ -121,6 +121,18 @@ public class EmployeeControllerTestIT {
 		
 	}
 	
+	private EmployeeDto getEmployee(long id) {
+		EmployeeDto employee = webTestClient
+			.get()
+			.uri(BASE_URI + "/" + id)
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody(EmployeeDto.class)
+			.returnResult().getResponseBody();
+	
+		return employee;
+	}
+	
 	private EmployeeDto putEmployee(long id, EmployeeDto employee) {
 		EmployeeDto updatedEmployee = webTestClient
 			.put()
@@ -134,8 +146,8 @@ public class EmployeeControllerTestIT {
 		return updatedEmployee;
 	}
 	
-	private void postEmployee(EmployeeDto employee) {
-		webTestClient
+	private EmployeeDto postEmployee(EmployeeDto employee) {
+		return webTestClient
 			.post()
 			.uri(BASE_URI)
 			.bodyValue(employee)
