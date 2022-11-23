@@ -1,5 +1,6 @@
 package hu.webuni.hr.domi.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,13 @@ import hu.webuni.hr.domi.model.Company;
 import hu.webuni.hr.domi.model.CompanyType;
 //import hu.webuni.hr.domi.model.Company.CompanyType;
 import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.Leave;
 import hu.webuni.hr.domi.model.Position;
 import hu.webuni.hr.domi.model.Position.Qualification;
 import hu.webuni.hr.domi.repository.CompanyRepository;
 import hu.webuni.hr.domi.repository.CompanyTypeRepository;
 import hu.webuni.hr.domi.repository.EmployeeRepository;
+import hu.webuni.hr.domi.repository.LeaveRepository;
 import hu.webuni.hr.domi.repository.PositionRepository;
 
 @Service
@@ -31,6 +34,9 @@ public class InitDbService{
 	
 	@Autowired
 	CompanyTypeRepository companyTypeRepository;
+	
+	@Autowired
+	LeaveRepository leaveRepository;
 
 	@Transactional
 	public void clearDB() {
@@ -97,6 +103,13 @@ public class InitDbService{
 		newSecondCompany.addEmployee(newEmployee6);
 		newSecondCompany.addEmployee(newEmployee7);
 		newSecondCompany.addEmployee(newEmployee8);
+		
+		
+		
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2),LocalDate.now().plusDays(4),newEmployee7,null));
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(3),LocalDate.now().plusDays(10),newEmployee8,null));
+		
+		
 		
 	}
 	
