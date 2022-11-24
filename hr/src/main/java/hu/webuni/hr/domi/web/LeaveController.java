@@ -5,11 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.webuni.hr.domi.mapper.LeaveMapper;
@@ -27,10 +25,9 @@ public class LeaveController {
 	private LeaveMapper leaveMapper;
 
 	@GetMapping
-	public Map<String,Object> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+	public Map<String,Object> getAll(Pageable pageable) {
 		
-		Pageable paging = PageRequest.of(page, size);
-		Page<Leave> leaves = leaveService.getAll(paging);
+		Page<Leave> leaves = leaveService.getAll(pageable);
 		
 		Map<String, Object> response = new HashMap<>();
 	      response.put("leaves", leaveMapper.leavesToDtos(leaves.getContent()));
