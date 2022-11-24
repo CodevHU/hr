@@ -67,6 +67,15 @@ public class Leave {
 		this.endDate = endDate;
 		this.createdBy = createdBy;
 	}
+	
+	public Leave(long id, @NotNull @FutureOrPresent LocalDate startDate, @NotNull @FutureOrPresent LocalDate endDate,
+			Employee createdBy, Status status) {
+		this.id = id;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.createdBy = createdBy;
+		this.status = status;
+	}
 
 	public long getId() {
 		return id;

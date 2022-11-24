@@ -12,6 +12,7 @@ import hu.webuni.hr.domi.model.CompanyType;
 //import hu.webuni.hr.domi.model.Company.CompanyType;
 import hu.webuni.hr.domi.model.Employee;
 import hu.webuni.hr.domi.model.Leave;
+import hu.webuni.hr.domi.model.Leave.Status;
 import hu.webuni.hr.domi.model.Position;
 import hu.webuni.hr.domi.model.Position.Qualification;
 import hu.webuni.hr.domi.repository.CompanyRepository;
@@ -108,6 +109,8 @@ public class InitDbService{
 		
 		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2),LocalDate.now().plusDays(4),newEmployee7));
 		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(3),LocalDate.now().plusDays(10),newEmployee8));
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(10),LocalDate.now().plusDays(15),newEmployee1,Status.ACCAPTED));
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(13),LocalDate.now().plusDays(20),newEmployee2,Status.DENIDED));
 		
 		
 		

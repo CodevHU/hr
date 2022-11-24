@@ -23,4 +23,6 @@ public interface LeaveMapper {
 	@Named("summary")
 	LeaveDto leaveToSummaryDto(Leave leave);
 
+	Leave dtoToLeave(LeaveDto leave);
+
 }
