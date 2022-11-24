@@ -106,8 +106,8 @@ public class InitDbService{
 		
 		
 		
-		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2),LocalDate.now().plusDays(4),newEmployee7,null));
-		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(3),LocalDate.now().plusDays(10),newEmployee8,null));
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2),LocalDate.now().plusDays(4),newEmployee7));
+		leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(3),LocalDate.now().plusDays(10),newEmployee8));
 		
 		
 		

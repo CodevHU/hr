@@ -1,54 +1,30 @@
-package hu.webuni.hr.domi.model;
+package hu.webuni.hr.domi.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
+import hu.webuni.hr.domi.model.Employee;
+import hu.webuni.hr.domi.model.Leave.Status;
 
-import org.hibernate.annotations.CreationTimestamp;
+public class LeaveDto {
 
-@Entity
-public class Leave {
 	
-	public enum Status {PENDING, ACCAPTED, DENIDED}
-
-	@Id
-	@GeneratedValue
 	private long id;
-
-	@NotNull
-	@FutureOrPresent
 	private LocalDate startDate;
-
-	@NotNull
-	@FutureOrPresent
 	private LocalDate endDate;
-
-	@ManyToOne
+	
 	private Employee createdBy;
-	
-	@ManyToOne
 	private Employee superior;
-	
-	@Enumerated(EnumType.STRING)
-	private Status status = Status.PENDING;
+	private Status status;
 
-	@CreationTimestamp
 	private LocalDateTime createdAt;
 	
 	
-	public Leave() {
+	public LeaveDto() {
 		
 	}	
 
-	public Leave(long id, @NotNull @FutureOrPresent LocalDate startDate, @NotNull @FutureOrPresent LocalDate endDate,
+	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
 			Employee createdBy, Employee superior, Status status, LocalDateTime createdAt) {
 		super();
 		this.id = id;
@@ -60,7 +36,7 @@ public class Leave {
 		this.createdAt = createdAt;
 	}
 	
-	public Leave(long id, @NotNull @FutureOrPresent LocalDate startDate, @NotNull @FutureOrPresent LocalDate endDate,
+	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
 			Employee createdBy) {
 		this.id = id;
 		this.startDate = startDate;
