@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.webuni.hr.domi.dto.LeaveDto;
 import hu.webuni.hr.domi.mapper.LeaveMapper;
 import hu.webuni.hr.domi.model.Leave;
+import hu.webuni.hr.domi.model.LeaveSearchCriteria;
 import hu.webuni.hr.domi.service.LeaveService;
 
 @RestController
@@ -43,10 +45,29 @@ public class LeaveController {
 	      return response;
 	}
 	
-	@PutMapping("/{id}")
-	public Leave update(@PathVariable long id, @RequestBody LeaveDto leave) {
+	@GetMapping("/filter")
+	public Map<String,Object> filter(Pageable pageable, @RequestBody LeaveSearchCriteria example) {
 		
-		return leaveService.update(id, leaveMapper.dtoToLeave(leave));
+		Page<Leave> leaves = leaveService.find(pageable, example);
+		
+		Map<String, Object> response = new HashMap<>();
+	      response.put("leaves", leaveMapper.leavesToDtos(leaves.getContent()));
+	      response.put("currentPage", leaves.getNumber());
+	      response.put("totalItems", leaves.getTotalElements());
+	      response.put("totalPages", leaves.getTotalPages());
+	      
+	      return response;
+	}
+	
+	@PostMapping("/feedback/{id}")
+	public LeaveDto feedback(@PathVariable long id, @RequestBody LeaveDto leave) {
+		return leaveMapper.leaveToSummaryDto(leaveService.updateStatus(id,leaveMapper.dtoToLeave(leave)));
+	}
+	
+	@PutMapping("/{id}")
+	public LeaveDto update(@PathVariable long id, @RequestBody LeaveDto leave) {
+		
+		return leaveMapper.leaveToSummaryDto(leaveService.update(id, leaveMapper.dtoToLeave(leave)));
 		
 	}
 	
