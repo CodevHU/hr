@@ -34,13 +34,16 @@ public class LeaveSpecifications  {
 		
 		LocalDateTime toDate = LocalDateTime.of(
 				createdAtTo, 
-				LocalTime.of(0, 0)
+				LocalTime.of(23, 59)
 			);
 		
 		return (root, cq, cb) -> cb.between(root.get(Leave_.CREATED_AT), fromDate, toDate);
 	}
 
 	public static Specification<Leave> hasLeaveDate(LocalDate leaveDateFrom, LocalDate leaveDateTo) {
+		
+		System.out.println(leaveDateFrom);
+		System.out.println(leaveDateTo);
 			
 		return (root, cq, cb) -> cb.or(
 				cb.between(root.get(Leave_.START_DATE), leaveDateFrom, leaveDateTo),
