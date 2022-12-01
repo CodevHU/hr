@@ -26,7 +26,7 @@ public class EmployeeDto {
 	
 	private CompanyDto company;
 	
-	private Position position;
+	private PositionDto position;
 	
 	
 	public EmployeeDto() {
@@ -94,11 +94,11 @@ public class EmployeeDto {
 		this.company = company;
 	}
 
-	public Position getPosition() {
+	public PositionDto getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+	public void setPosition(PositionDto position) {
 		this.position = position;
 	}
 

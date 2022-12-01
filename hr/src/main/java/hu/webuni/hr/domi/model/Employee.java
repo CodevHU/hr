@@ -17,30 +17,36 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@NotBlank
 	private String name;
-	
+
 	@Min(0)
 	private int pay;
 
 	@Past
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime firstWorkingDay;
-	
+
+	private String username;
+
+	private String password;
+
 	@ManyToOne
 	Company company;
-	
+
 	@ManyToOne
 	Position position;
-	
-	
+
+	@ManyToOne
+	private Employee superior;
+
 	public Employee() {
-		
+
 	}
-	
+
 	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay) {
 
@@ -51,7 +57,19 @@ public class Employee {
 		this.firstWorkingDay = firstWorkingDay;
 	}
 	
-	
+	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
+			@Past LocalDateTime firstWorkingDay,String username, String password, Employee superior) {
+
+		this.id = id;
+		this.name = name;
+		this.position = position;
+		this.pay = pay;
+		this.firstWorkingDay = firstWorkingDay;
+		
+		this.username = username;
+		this.password = password;
+		this.superior = superior;
+	}
 
 	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
 			@Past LocalDateTime firstWorkingDay, Company company) {
@@ -62,6 +80,30 @@ public class Employee {
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 		this.company = company;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Employee getSuperior() {
+		return superior;
+	}
+
+	public void setSuperior(Employee superior) {
+		this.superior = superior;
 	}
 
 	public Company getCompany() {
@@ -117,7 +159,5 @@ public class Employee {
 		return "Employee [id=" + id + ", name=" + name + ", pay=" + pay + ", firstWorkingDay=" + firstWorkingDay
 				+ ", company=" + id + ", position=" + position + "]";
 	}
-	
-	
 
 }

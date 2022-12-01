@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,7 @@ public class LeaveController {
 	}
 	
 	@PostMapping("/feedback/{id}")
+	@PreAuthorize("#leave.createdBy.id == authentication.principal.employee.id")
 	public LeaveDto feedback(@PathVariable long id, @RequestBody LeaveDto leave) {
 		return leaveMapper.leaveToSummaryDto(leaveService.updateStatus(id,leaveMapper.dtoToLeave(leave)));
 	}

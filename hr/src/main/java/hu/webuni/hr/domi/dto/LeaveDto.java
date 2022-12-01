@@ -3,7 +3,6 @@ package hu.webuni.hr.domi.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import hu.webuni.hr.domi.model.Employee;
 import hu.webuni.hr.domi.model.Leave.Status;
 
 public class LeaveDto {
@@ -13,8 +12,8 @@ public class LeaveDto {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	
-	private Employee createdBy;
-	private Employee superior;
+	private EmployeeDto createdBy;
+	private EmployeeDto superior;
 	private Status status;
 
 	private LocalDateTime createdAt;
@@ -25,7 +24,7 @@ public class LeaveDto {
 	}	
 
 	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
-			Employee createdBy, Employee superior, Status status, LocalDateTime createdAt) {
+			EmployeeDto createdBy, EmployeeDto superior, Status status, LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
@@ -37,7 +36,7 @@ public class LeaveDto {
 	}
 	
 	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
-			Employee createdBy) {
+			EmployeeDto createdBy) {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -68,11 +67,11 @@ public class LeaveDto {
 		this.endDate = endDate;
 	}
 
-	public Employee getCreatedBy() {
+	public EmployeeDto getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Employee createdBy) {
+	public void setCreatedBy(EmployeeDto createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -92,11 +91,11 @@ public class LeaveDto {
 		this.status = status;
 	}
 
-	public Employee getSuperior() {
+	public EmployeeDto getSuperior() {
 		return superior;
 	}
 
-	public void setSuperior(Employee superior) {
+	public void setSuperior(EmployeeDto superior) {
 		this.superior = superior;
 	}
 	

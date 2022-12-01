@@ -1,6 +1,7 @@
 package hu.webuni.hr.domi.repository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 //	void truncateEmployees();
 
 	Page<Employee> findByPosition(String position, Pageable page);
+
+	Optional<Employee> findByUsername(String username);
 
 }
