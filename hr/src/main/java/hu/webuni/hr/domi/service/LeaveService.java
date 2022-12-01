@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -16,6 +18,7 @@ import hu.webuni.hr.domi.model.Leave.Status;
 import hu.webuni.hr.domi.model.LeaveSearchCriteria;
 import hu.webuni.hr.domi.repository.EmployeeRepository;
 import hu.webuni.hr.domi.repository.LeaveRepository;
+import hu.webuni.hr.domi.security.EmployeeUser;
 
 @Service
 public class LeaveService {
@@ -25,7 +28,6 @@ public class LeaveService {
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
-
 	
 	public Page<Leave> getAll(Pageable page) {
 		Page<Leave> leaves = leaveRepository.findAll(page);
@@ -37,21 +39,23 @@ public class LeaveService {
 	@Transactional
 	public Leave updateStatus(long id, Leave updatedLeave) {
 		
-		System.out.println(updatedLeave.getSuperior().getId());
-		
 		Leave leave = leaveRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
+		if(leave.getCreatedBy().getSuperior() == null || leave.getCreatedBy().getSuperior().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("Employee's holiday request approve or deny only her manager.");
 		
-		
-		Employee superior = employeeRepository.findById(updatedLeave.getSuperior().getId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		Employee approver = employeeRepository.findById(getCurrentEmployeeUser().getEmployee().getId()).get();
 		
 		leave.setStatus(updatedLeave.getStatus());
-		leave.setSuperior(superior);
+		leave.setSuperior(approver);
 		
 		return leaveRepository.save(leave);
 		
+	}
+
+
+	private EmployeeUser getCurrentEmployeeUser() {
+		return (EmployeeUser) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 	}
 	
 

@@ -3,6 +3,8 @@ package hu.webuni.hr.domi.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,14 +63,14 @@ public class LeaveController {
 	}
 	
 	@PostMapping("/feedback/{id}")
-	@PreAuthorize("#leave.createdBy.id == authentication.principal.employee.id")
-	public LeaveDto feedback(@PathVariable long id, @RequestBody LeaveDto leave) {
+	public LeaveDto feedback(@PathVariable long id, @RequestBody @Valid LeaveDto leave) {
 		return leaveMapper.leaveToSummaryDto(leaveService.updateStatus(id,leaveMapper.dtoToLeave(leave)));
 	}
 	
 	@PutMapping("/{id}")
-	public LeaveDto update(@PathVariable long id, @RequestBody LeaveDto leave) {
-		
+	@PreAuthorize("#leave.createdBy.id == authentication.principal.employee.id")
+	public LeaveDto update(@PathVariable long id, @RequestBody @Valid LeaveDto leave) {
+		System.out.println(leave.getCreatedBy().getId());
 		return leaveMapper.leaveToSummaryDto(leaveService.update(id, leaveMapper.dtoToLeave(leave)));
 		
 	}

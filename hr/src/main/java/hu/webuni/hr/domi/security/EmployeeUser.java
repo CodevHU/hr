@@ -20,6 +20,8 @@ public class EmployeeUser extends User {
 			Employee employee) {
 		super(username, password, authorities);
 		this.employee = employee;
+		
+		System.out.println(employee.getId());
 	}
 
 	public Employee getEmployee() {

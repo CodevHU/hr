@@ -114,6 +114,7 @@ public class InitDbService{
 		newEmployee7.setPosition(coordinator);
 		newEmployee7.setUsername("user7");
 		newEmployee7.setPassword(passwordEncoder.encode("pass"));
+		newEmployee7.setSuperior(newEmployee2);
 		
 		Employee newEmployee8 = employeeRepository.save(new Employee(0L,"Fekete Gyula",manager,80000,LocalDateTime.of(2016, 1, 14, 10, 34)));
 		newEmployee8.setPosition(manager);
