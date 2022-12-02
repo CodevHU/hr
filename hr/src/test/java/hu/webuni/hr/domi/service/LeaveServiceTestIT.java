@@ -14,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.domi.model.Employee;
@@ -39,6 +42,9 @@ public class LeaveServiceTestIT {
 	
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	 
 	private Employee createdBy;
 	private Employee superior;
@@ -49,7 +55,11 @@ public class LeaveServiceTestIT {
 		employeeRepository.deleteAll();
 		companyRepository.deleteAll();
 		
-		this.createdBy = employeeRepository.save(new Employee(0L, "Kiss Elemér", null, 0, LocalDateTime.now().minusDays(2)));
+		Employee emp = new Employee(0L, "Kiss Elemér2", null, 0, LocalDateTime.now().minusDays(2));
+		emp.setUsername("test_admin");
+		emp.setPassword(passwordEncoder.encode("pass"));
+		
+		this.createdBy = employeeRepository.save(emp);
 		this.superior = employeeRepository.save(new Employee(0L, "Felettes István", null, 0, LocalDateTime.now().minusDays(5)));
 	}
 	
@@ -67,6 +77,7 @@ public class LeaveServiceTestIT {
 	}
 	
 	@Test
+	@WithUserDetails(value = "test_admin", setupBefore = TestExecutionEvent.TEST_EXECUTION)
 	void testIfDeleteLeaveWhenStatusIsNotPendingThenThrowException() throws Exception {
 		
 		Leave leave = leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2), LocalDate.now().plusDays(6), createdBy,superior,Status.ACCAPTED,null));
@@ -76,6 +87,7 @@ public class LeaveServiceTestIT {
 	}
 	
 	@Test
+	@WithUserDetails(value = "test_admin", setupBefore = TestExecutionEvent.TEST_EXECUTION)
 	void testIfUpdateLeaveWhenStatusIsNotPendingThenThrowException() throws Exception {
 		
 		Leave leave = leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2), LocalDate.now().plusDays(6), createdBy,superior,Status.ACCAPTED,null));

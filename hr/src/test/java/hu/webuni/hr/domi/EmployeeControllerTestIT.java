@@ -45,21 +45,6 @@ public class EmployeeControllerTestIT {
 	}
 	
 	@Test
-	void testThanPostEmployeeIsChanged() throws Exception {
-		
-		EmployeeDto employee = postEmployee(new EmployeeDto(0, "Kóst Elemér", new Position("Manager",Qualification.GRADUATION),2000000, LocalDateTime.of(2000, 1, 14, 10, 34)));
-		
-		List<EmployeeDto> employeesAfter = getAllEmployees();
-		
-		assertThat(employeesAfter)
-				.usingRecursiveFieldByFieldElementComparator()
-				.contains(employee);
-		
-//		assertThat(getEmployee(employee.getId())).equals(employee);
-		
-	}
-	
-	@Test
 	void testThenPostEmployeeNegativePayException() throws Exception {
 		
 		EmployeeDto newEmploye = new EmployeeDto(10, "Kóst Elemér", null, -2000000, LocalDateTime.of(2000, 1, 14, 10, 34));

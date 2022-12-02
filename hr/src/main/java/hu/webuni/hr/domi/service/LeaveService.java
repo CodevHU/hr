@@ -65,6 +65,9 @@ public class LeaveService {
 		Leave leave = leaveRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
+		if(leave.getCreatedBy().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can delete only the own holiday request..");
+		
+		
 		if(leave.getStatus() != Status.PENDING) throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
 			
 		leaveRepository.delete(leave);
@@ -76,6 +79,8 @@ public class LeaveService {
 		
 		Leave origLeave = leaveRepository.findById(id)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		if(leave.getCreatedBy().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can modify only the own holiday request.");
 		
 		if(origLeave.getStatus() != Status.PENDING) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		
