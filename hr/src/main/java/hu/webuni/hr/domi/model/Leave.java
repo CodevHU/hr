@@ -32,10 +32,10 @@ public class Leave {
 	private LocalDate endDate;
 
 	@ManyToOne
-	private Employee createdBy;
+	private Employee employee;
 	
 	@ManyToOne
-	private Employee superior;
+	private Employee approver;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.PENDING;
@@ -54,8 +54,8 @@ public class Leave {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdBy = createdBy;
-		this.superior = superior;
+		this.employee = createdBy;
+		this.approver = superior;
 		this.status = status;
 		this.createdAt = createdAt;
 	}
@@ -65,7 +65,7 @@ public class Leave {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdBy = createdBy;
+		this.employee = createdBy;
 	}
 	
 	public Leave(long id, @NotNull @FutureOrPresent LocalDate startDate, @NotNull @FutureOrPresent LocalDate endDate,
@@ -73,7 +73,7 @@ public class Leave {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdBy = createdBy;
+		this.employee = createdBy;
 		this.status = status;
 	}
 
@@ -101,12 +101,12 @@ public class Leave {
 		this.endDate = endDate;
 	}
 
-	public Employee getCreatedBy() {
-		return createdBy;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setCreatedBy(Employee createdBy) {
-		this.createdBy = createdBy;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -125,12 +125,12 @@ public class Leave {
 		this.status = status;
 	}
 
-	public Employee getSuperior() {
-		return superior;
+	public Employee getApprover() {
+		return approver;
 	}
 
-	public void setSuperior(Employee superior) {
-		this.superior = superior;
+	public void setApprover(Employee approver) {
+		this.approver = approver;
 	}
 	
 	

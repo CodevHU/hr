@@ -12,8 +12,8 @@ public class LeaveDto {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	
-	private EmployeeDto createdBy;
-	private EmployeeDto superior;
+	private EmployeeDto employee;
+	private EmployeeDto approver;
 	private Status status;
 
 	private LocalDateTime createdAt;
@@ -24,23 +24,23 @@ public class LeaveDto {
 	}	
 
 	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
-			EmployeeDto createdBy, EmployeeDto superior, Status status, LocalDateTime createdAt) {
+			EmployeeDto employee, EmployeeDto approver, Status status, LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdBy = createdBy;
-		this.superior = superior;
+		this.employee = employee;
+		this.approver = approver;
 		this.status = status;
 		this.createdAt = createdAt;
 	}
 	
 	public LeaveDto(long id, LocalDate startDate, LocalDate endDate,
-			EmployeeDto createdBy) {
+			EmployeeDto employee) {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdBy = createdBy;
+		this.employee = employee;
 	}
 
 	public long getId() {
@@ -68,11 +68,11 @@ public class LeaveDto {
 	}
 
 	public EmployeeDto getCreatedBy() {
-		return createdBy;
+		return employee;
 	}
 
-	public void setCreatedBy(EmployeeDto createdBy) {
-		this.createdBy = createdBy;
+	public void setEmployee(EmployeeDto employee) {
+		this.employee = employee;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -91,12 +91,12 @@ public class LeaveDto {
 		this.status = status;
 	}
 
-	public EmployeeDto getSuperior() {
-		return superior;
+	public EmployeeDto getApprover() {
+		return approver;
 	}
 
-	public void setSuperior(EmployeeDto superior) {
-		this.superior = superior;
+	public void setApprover(EmployeeDto approver) {
+		this.approver = approver;
 	}
 	
 	

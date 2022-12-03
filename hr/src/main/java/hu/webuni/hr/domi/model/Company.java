@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 		name = "Company.full",
 		attributeNodes = {
 				@NamedAttributeNode("employees"),
+				@NamedAttributeNode("employees.position"),
 				@NamedAttributeNode("companyType")
 		}
 )

@@ -25,5 +25,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	Page<Employee> findByPosition(String position, Pageable page);
 
 	Optional<Employee> findByUsername(String username);
+	
+	
 
 }

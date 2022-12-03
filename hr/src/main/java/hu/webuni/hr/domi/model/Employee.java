@@ -1,12 +1,15 @@
 package hu.webuni.hr.domi.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -42,6 +45,9 @@ public class Employee {
 
 	@ManyToOne
 	private Employee superior;
+	
+	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
+	private List<Leave> leave;
 
 	public Employee() {
 
@@ -152,6 +158,14 @@ public class Employee {
 
 	public void setFirstWorkingDay(LocalDateTime firstWorkingDay) {
 		this.firstWorkingDay = firstWorkingDay;
+	}
+	
+	public List<Leave> getLeave() {
+		return leave;
+	}
+
+	public void setLeave(List<Leave> leave) {
+		this.leave = leave;
 	}
 
 	@Override

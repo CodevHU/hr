@@ -134,10 +134,10 @@ public class InitDbService{
 		Leave leave1 = new Leave(0L, LocalDate.now().plusDays(2),LocalDate.now().plusDays(4),newEmployee7);
 		Leave leave2 = new Leave(0L, LocalDate.now().plusDays(3),LocalDate.now().plusDays(10),newEmployee8);
 		Leave leave3 = new Leave(0L, LocalDate.now().plusDays(10),LocalDate.now().plusDays(15),newEmployee1,Status.ACCAPTED);
-		leave3.setSuperior(newEmployee2);
+		leave3.setApprover(newEmployee2);
 		
 		Leave leave4 = new Leave(0L, LocalDate.now().plusDays(13),LocalDate.now().plusDays(20),newEmployee2,Status.DENIDED);
-		leave4.setSuperior(newEmployee6);
+		leave4.setApprover(newEmployee6);
 		
 		leaveRepository.save(leave1);
 		leaveRepository.save(leave2);

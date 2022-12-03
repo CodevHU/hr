@@ -7,5 +7,4 @@ import hu.webuni.hr.domi.model.Leave;
 
 public interface LeaveRepository extends JpaRepository<Leave, Long>, JpaSpecificationExecutor<Leave> {
 
-
 }

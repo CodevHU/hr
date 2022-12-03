@@ -69,7 +69,7 @@ public class LeaveServiceTestIT {
 		Leave leave = leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2), LocalDate.now().plusDays(6), createdBy));
 		
 		assertThat(leaveRepository.findById(leave.getId()).get().getId()).isEqualTo(leave.getId());
-		assertThat(leaveRepository.findById(leave.getId()).get().getCreatedBy().getId()).isEqualTo(leave.getCreatedBy().getId());
+		assertThat(leaveRepository.findById(leave.getId()).get().getEmployee().getId()).isEqualTo(leave.getEmployee().getId());
 		assertThat(leaveRepository.findById(leave.getId()).get().getStatus()).isEqualTo(Status.PENDING);
 		assertThat(leaveRepository.findById(leave.getId()).get().getStartDate()).isEqualTo(leave.getStartDate());
 		assertThat(leaveRepository.findById(leave.getId()).get().getEndDate()).isEqualTo(leave.getEndDate());

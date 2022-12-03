@@ -42,12 +42,12 @@ public class LeaveService {
 		Leave leave = leaveRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		if(leave.getCreatedBy().getSuperior() == null || leave.getCreatedBy().getSuperior().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("Employee's holiday request approve or deny only her manager.");
+		if(leave.getEmployee().getSuperior() == null || leave.getEmployee().getSuperior().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("Employee's holiday request approve or deny only her manager.");
 		
 		Employee approver = employeeRepository.findById(getCurrentEmployeeUser().getEmployee().getId()).get();
 		
 		leave.setStatus(updatedLeave.getStatus());
-		leave.setSuperior(approver);
+		leave.setApprover(approver);
 		
 		return leaveRepository.save(leave);
 		
@@ -65,7 +65,7 @@ public class LeaveService {
 		Leave leave = leaveRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		if(leave.getCreatedBy().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can delete only the own holiday request..");
+		if(leave.getEmployee().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can delete only the own holiday request..");
 		
 		
 		if(leave.getStatus() != Status.PENDING) throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
@@ -80,14 +80,14 @@ public class LeaveService {
 		Leave origLeave = leaveRepository.findById(id)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		if(leave.getCreatedBy().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can modify only the own holiday request.");
+		if(leave.getEmployee().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can modify only the own holiday request.");
 		
 		if(origLeave.getStatus() != Status.PENDING) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		
 		leave.setId(id);
 		leave.setStatus(Status.PENDING);
 		leave.setCreatedAt(origLeave.getCreatedAt());
-		leave.setCreatedBy(origLeave.getCreatedBy());
+		leave.setEmployee(origLeave.getEmployee());
 		
 		return leaveRepository.save(leave);
 	}

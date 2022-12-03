@@ -18,11 +18,11 @@ public class LeaveSpecifications  {
 	}
 
 	public static Specification<Leave> hasCreatedEmployeeName(String name) {
-		return  (root, cq, cb) -> cb.like(cb.lower(root.get(Leave_.CREATED_BY).get(Employee_.NAME)), name.toLowerCase() + "%");
+		return  (root, cq, cb) -> cb.like(cb.lower(root.get(Leave_.EMPLOYEE).get(Employee_.NAME)), name.toLowerCase() + "%");
 	}
 
 	public static Specification<Leave> hasSuperiorEmployeeName(String name) {
-		return  (root, cq, cb) -> cb.like(cb.lower(root.get(Leave_.SUPERIOR).get(Employee_.NAME)), name.toLowerCase() + "%");
+		return  (root, cq, cb) -> cb.like(cb.lower(root.get(Leave_.APPROVER).get(Employee_.NAME)), name.toLowerCase() + "%");
 	}
 
 	public static Specification<Leave> hasCreatedAt(LocalDate createdAtFrom, LocalDate createdAtTo) {
