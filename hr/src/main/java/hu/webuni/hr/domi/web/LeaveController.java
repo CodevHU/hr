@@ -51,6 +51,11 @@ public class LeaveController {
 		return leavePage;
 	}
 	
+	@PostMapping
+	public LeaveDto feedback(@RequestBody @Valid LeaveDto leave) {
+		return leaveMapper.leaveToDto(leaveService.create(leaveMapper.dtoToLeave(leave)));
+	}
+	
 	@PostMapping("/feedback/{id}")
 	public LeaveDto feedback(@PathVariable long id, @RequestBody @Valid LeaveDto leave) {
 		return leaveMapper.leaveToSummaryDto(leaveService.updateStatus(id,leaveMapper.dtoToLeave(leave)));

@@ -25,4 +25,6 @@ public interface LeaveMapper {
 
 	Leave dtoToLeave(LeaveDto leave);
 
+	LeaveDto leaveToDto(Leave create);
+
 }

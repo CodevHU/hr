@@ -1,5 +1,7 @@
 package hu.webuni.hr.domi.service;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -117,6 +119,14 @@ public class LeaveService {
 		}
 		
 		return leaveRepository.findAll(spec, page);
+	}
+
+	@Transactional
+	public Leave create(Leave leave) {
+		
+		if(leave.getEmployee().getId() != getCurrentEmployeeUser().getEmployee().getId()) throw new AccessDeniedException("The employee can modify only the own holiday request.");
+		
+		return leaveRepository.save(leave);
 	}
 
 	
