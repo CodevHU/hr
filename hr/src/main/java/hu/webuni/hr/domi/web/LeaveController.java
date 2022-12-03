@@ -1,8 +1,5 @@
 package hu.webuni.hr.domi.web;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.webuni.hr.domi.dto.LeaveDto;
+import hu.webuni.hr.domi.dto.PageDto;
 import hu.webuni.hr.domi.mapper.LeaveMapper;
 import hu.webuni.hr.domi.model.Leave;
 import hu.webuni.hr.domi.model.LeaveSearchCriteria;
@@ -35,31 +33,22 @@ public class LeaveController {
 	private LeaveMapper leaveMapper;
 
 	@GetMapping
-	public Map<String,Object> getAll(Pageable pageable) {
+	public PageDto getAll(Pageable pageable) {
 		
 		Page<Leave> leaves = leaveService.getAll(pageable);
+		PageDto leavePage = new PageDto(leaves.getNumber(), leaves.getTotalElements(), leaves.getTotalPages(), leaveMapper.leavesToDtos(leaves.getContent()));
 		
-		Map<String, Object> response = new HashMap<>();
-	      response.put("leaves", leaveMapper.leavesToDtos(leaves.getContent()));
-	      response.put("currentPage", leaves.getNumber());
-	      response.put("totalItems", leaves.getTotalElements());
-	      response.put("totalPages", leaves.getTotalPages());
-	      
-	      return response;
+		return leavePage;
 	}
 	
 	@GetMapping("/filter")
-	public Map<String,Object> filter(Pageable pageable, @RequestBody LeaveSearchCriteria example) {
+	public PageDto filter(Pageable pageable, @RequestBody LeaveSearchCriteria example) {
 		
 		Page<Leave> leaves = leaveService.find(pageable, example);
 		
-		Map<String, Object> response = new HashMap<>();
-	      response.put("leaves", leaveMapper.leavesToDtos(leaves.getContent()));
-	      response.put("currentPage", leaves.getNumber());
-	      response.put("totalItems", leaves.getTotalElements());
-	      response.put("totalPages", leaves.getTotalPages());
-	      
-	      return response;
+		PageDto leavePage = new PageDto(leaves.getNumber(), leaves.getTotalElements(), leaves.getTotalPages(), leaveMapper.leavesToDtos(leaves.getContent()));
+		
+		return leavePage;
 	}
 	
 	@PostMapping("/feedback/{id}")
@@ -70,7 +59,7 @@ public class LeaveController {
 	@PutMapping("/{id}")
 	@PreAuthorize("#leave.createdBy.id == authentication.principal.employee.id")
 	public LeaveDto update(@PathVariable long id, @RequestBody @Valid LeaveDto leave) {
-		System.out.println(leave.getCreatedBy().getId());
+		System.out.println(leave.getEmployee().getId());
 		return leaveMapper.leaveToSummaryDto(leaveService.update(id, leaveMapper.dtoToLeave(leave)));
 		
 	}

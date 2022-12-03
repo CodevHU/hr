@@ -49,13 +49,13 @@ public class Leave {
 	}	
 
 	public Leave(long id, @NotNull @FutureOrPresent LocalDate startDate, @NotNull @FutureOrPresent LocalDate endDate,
-			Employee createdBy, Employee superior, Status status, LocalDateTime createdAt) {
+			Employee employee, Employee approver, Status status, LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.employee = createdBy;
-		this.approver = superior;
+		this.employee = employee;
+		this.approver = approver;
 		this.status = status;
 		this.createdAt = createdAt;
 	}

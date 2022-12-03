@@ -16,10 +16,10 @@ public interface LeaveMapper {
 	@IterableMapping(qualifiedByName = "summary")
 	List<LeaveDto> leavesToDtos(List<Leave> content);
 	
-	@Mapping(target = "createdBy.company.employees", ignore = true)
-	@Mapping(target = "createdBy.position.employees", ignore = true)
-	@Mapping(target = "superior.company.employees", ignore = true)
-	@Mapping(target = "superior.position.employees", ignore = true)
+	@Mapping(target = "employee.company.employees", ignore = true)
+	@Mapping(target = "employee.position.employees", ignore = true)
+	@Mapping(target = "approver.company.employees", ignore = true)
+	@Mapping(target = "approver.position.employees", ignore = true)
 	@Named("summary")
 	LeaveDto leaveToSummaryDto(Leave leave);
 

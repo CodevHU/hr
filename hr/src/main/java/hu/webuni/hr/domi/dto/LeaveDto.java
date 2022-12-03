@@ -67,7 +67,7 @@ public class LeaveDto {
 		this.endDate = endDate;
 	}
 
-	public EmployeeDto getCreatedBy() {
+	public EmployeeDto getEmployee() {
 		return employee;
 	}
 

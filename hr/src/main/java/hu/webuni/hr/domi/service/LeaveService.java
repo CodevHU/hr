@@ -100,12 +100,12 @@ public class LeaveService {
 			spec = spec.and(LeaveSpecifications.hasStatus(example.getStatus()));
 		}
 		
-		if(example.getCreatedBy() != null && StringUtils.hasText(example.getCreatedBy().getName())) {
-			spec = spec.and(LeaveSpecifications.hasCreatedEmployeeName(example.getCreatedBy().getName()));
+		if(example.getEmployee() != null && StringUtils.hasText(example.getEmployee())) {
+			spec = spec.and(LeaveSpecifications.hasCreatedEmployeeName(example.getEmployee()));
 		}
 		
-		if(example.getSuperior() != null && StringUtils.hasText(example.getSuperior().getName())) {
-			spec = spec.and(LeaveSpecifications.hasSuperiorEmployeeName(example.getSuperior().getName()));
+		if(example.getApprover() != null && StringUtils.hasText(example.getApprover())) {
+			spec = spec.and(LeaveSpecifications.hasSuperiorEmployeeName(example.getApprover()));
 		}
 		
 		if(example.getCreatedAtFrom() != null && example.getCreatedAtTo() != null) {

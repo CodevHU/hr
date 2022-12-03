@@ -7,8 +7,8 @@ import hu.webuni.hr.domi.model.Leave.Status;
 public class LeaveSearchCriteria {
 
 	private Status status;
-	private Employee createdBy;
-	private Employee superior;
+	private String employee;
+	private String approver;
 
 	private LocalDate createdAtFrom;
 	private LocalDate createdAtTo;
@@ -23,21 +23,21 @@ public class LeaveSearchCriteria {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	public Employee getCreatedBy() {
-		return createdBy;
+	
+	public String getEmployee() {
+		return employee;
 	}
 
-	public void setCreatedBy(Employee createdBy) {
-		this.createdBy = createdBy;
+	public void setEmployee(String employee) {
+		this.employee = employee;
 	}
 
-	public Employee getSuperior() {
-		return superior;
+	public String getApprover() {
+		return approver;
 	}
 
-	public void setSuperior(Employee superior) {
-		this.superior = superior;
+	public void setApprover(String approver) {
+		this.approver = approver;
 	}
 
 	public LocalDate getCreatedAtFrom() {

@@ -103,7 +103,7 @@ public class LeaveServiceTestIT {
 		Leave leave = leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2), LocalDate.now().plusDays(6), createdBy));
 		
 		LeaveSearchCriteria example = new LeaveSearchCriteria();
-		example.setCreatedBy(createdBy);
+		example.setEmployee(createdBy.getName());
 		
 		Pageable paging = PageRequest.of(0, 10000);
 		
@@ -119,7 +119,7 @@ public class LeaveServiceTestIT {
 		Leave leave = leaveRepository.save(new Leave(0L, LocalDate.now().plusDays(2), LocalDate.now().plusDays(6), createdBy));
 		
 		LeaveSearchCriteria example = new LeaveSearchCriteria();
-		example.setCreatedBy(createdBy);
+		example.setEmployee(createdBy.getName());
 		example.setStatus(Status.PENDING);
 		
 		Pageable paging = PageRequest.of(0, 10000);
