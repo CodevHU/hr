@@ -27,6 +27,10 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	@Query("SELECT c FROM Company c")
 	List<Company> findAllWithEmployees();
 
+	@EntityGraph("Company.full")
+	@Query("SELECT c FROM Company c WHERE c.id = :id")
+	Company findByIdWithEmployee(long id);
+
 	
 
 	

@@ -2,14 +2,12 @@ package hu.webuni.hr.domi.model;
 
 import java.util.List;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-@Embeddable
 public class Position {
 	
 	public enum Qualification { GRADUATION, COLLAGE, UNIVERSITY, PHD }

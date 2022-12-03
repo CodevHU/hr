@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 
 
@@ -18,14 +19,14 @@ import javax.persistence.OneToMany;
 @NamedEntityGraph(
 		name = "Company.full",
 		attributeNodes = {
-				@NamedAttributeNode("employees"),
-				@NamedAttributeNode("employees.position"),
+				@NamedAttributeNode(value = "employees", subgraph = "employee"),
 				@NamedAttributeNode("companyType")
+		},
+		subgraphs = {
+				@NamedSubgraph(name = "employee", attributeNodes = @NamedAttributeNode(value = "position"))
 		}
 )
 public class Company {
-	
-//	public enum CompanyType {BT,KFT,ZRT,NYRT}
 	
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)

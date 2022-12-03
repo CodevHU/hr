@@ -54,6 +54,11 @@ public class CompanyService {
 		
 	}
 	
+	public Company getCompanyWithEmployees(long id) {
+		// TODO Auto-generated method stub
+		return companyRepository.findByIdWithEmployee(id);
+	}
+	
 	@Transactional
 	public Company saveCompany(Company company) {
 		
@@ -168,13 +173,6 @@ public class CompanyService {
 		return companyRepository.findCompaniesWhereTheEmployeesCountIsGreaterThanParam(employeeCount);
 	}
 
-	
 
-	
-	
-
-	
-
-	
 	
 }

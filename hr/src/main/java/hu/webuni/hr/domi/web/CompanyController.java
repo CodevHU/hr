@@ -69,12 +69,17 @@ public class CompanyController {
 	}
 
 	@GetMapping("/{id}")
-	public CompanyDto getCompanyById(@PathVariable int id) {
+	public CompanyDto getCompanyById(@PathVariable long id, @RequestParam Optional<Boolean> full) {
 		
 		Company company = companyService.getById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		if (full.orElse(false)) {
+			return  companyMapper.companyToDto(companyService.getCompanyWithEmployees(id));
+		} else {
+			return companyMapper.companyToSummaryDto(company);
+		}
 
-		return companyMapper.companyToDto(company);
 		
 	}
 	
