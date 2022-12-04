@@ -11,6 +11,20 @@ import org.springframework.stereotype.Component;
 public class HrConfigProperties {
 
 	private Salary salary = new Salary();
+	
+	
+	
+	private Security security = new Security();
+
+	public Security getSecurity() {
+		return security;
+	}
+
+	public void setSecurity(Security security) {
+		this.security = security;
+	}
+	
+	
 
 	public Salary getSalary() {
 		return salary;
@@ -101,6 +115,47 @@ public class HrConfigProperties {
 		@Override
 		public String toString() {
 			return "Year [limit=" + limit + ", percent=" + percent + "]";
+		}
+
+	}
+
+	public static class Security {
+
+		private String secret;
+		private String issuer;
+		private String algorithm;
+		private int expiresMinutes;
+
+		public String getSecret() {
+			return secret;
+		}
+
+		public void setSecret(String secret) {
+			this.secret = secret;
+		}
+
+		public String getIssuer() {
+			return issuer;
+		}
+
+		public void setIssuer(String issuer) {
+			this.issuer = issuer;
+		}
+
+		public String getAlgorithm() {
+			return algorithm;
+		}
+
+		public void setAlgorithm(String algorithm) {
+			this.algorithm = algorithm;
+		}
+
+		public int getExpiresMinutes() {
+			return expiresMinutes;
+		}
+
+		public void setExpiresMinutes(int expiresMinutes) {
+			this.expiresMinutes = expiresMinutes;
 		}
 
 	}
