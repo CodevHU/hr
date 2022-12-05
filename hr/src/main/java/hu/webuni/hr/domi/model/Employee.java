@@ -45,7 +45,7 @@ public class Employee {
 
 	@ManyToOne
 	private Employee superior;
-	
+
 	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
 	private List<Leave> leave;
 
@@ -62,16 +62,16 @@ public class Employee {
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
 	}
-	
+
 	public Employee(long id, @NotBlank String name, Position position, @Min(0) int pay,
-			@Past LocalDateTime firstWorkingDay,String username, String password, Employee superior) {
+			@Past LocalDateTime firstWorkingDay, String username, String password, Employee superior) {
 
 		this.id = id;
 		this.name = name;
 		this.position = position;
 		this.pay = pay;
 		this.firstWorkingDay = firstWorkingDay;
-		
+
 		this.username = username;
 		this.password = password;
 		this.superior = superior;
@@ -159,7 +159,7 @@ public class Employee {
 	public void setFirstWorkingDay(LocalDateTime firstWorkingDay) {
 		this.firstWorkingDay = firstWorkingDay;
 	}
-	
+
 	public List<Leave> getLeave() {
 		return leave;
 	}

@@ -74,7 +74,7 @@ public class InitDbService{
 		newEmployee2.setPosition(ceo);
 		newEmployee2.setUsername("user2");
 		newEmployee2.setPassword(passwordEncoder.encode("pass"));
-//		newEmployee2.setSuperior(newEmployee1);
+		newEmployee2.setSuperior(newEmployee1);
 		
 		Employee newEmployee3 = employeeRepository.save(new Employee(0L,"Lusta Gyula",manager,100000,LocalDateTime.of(2018, 1, 14, 10, 34)));
 		newEmployee3.setPosition(coordinator);
@@ -85,7 +85,7 @@ public class InitDbService{
 		newEmployee4.setPosition(manager);
 		newEmployee4.setUsername("user4");
 		newEmployee4.setPassword(passwordEncoder.encode("pass"));
-//		newEmployee4.setSuperior(newEmployee2);
+		newEmployee4.setSuperior(newEmployee2);
 		
 		Employee newEmployee5 = employeeRepository.save(new Employee(0L,"Kiss Zoltán",projectManager,76000,LocalDateTime.of(2020, 1, 14, 10, 34)));
 		newEmployee5.setPosition(manager);
