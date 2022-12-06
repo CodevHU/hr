@@ -1,7 +1,6 @@
 package hu.webuni.hr.domi.security;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,9 +22,6 @@ public class EmployeeUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Employee employee = employeeRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
-		
-		
-		
 		
 		return new EmployeeUser(username, employee.getPassword(), Arrays.asList(new SimpleGrantedAuthority("USER")),employee);
 	}
