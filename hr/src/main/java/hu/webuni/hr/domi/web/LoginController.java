@@ -31,7 +31,9 @@ public class LoginController {
 		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		
-		return jwtService.createToken( (EmployeeUser) authentication.getPrincipal());
+		String createToken = jwtService.createToken( (EmployeeUser) authentication.getPrincipal());
+		System.out.println(createToken);
+		return createToken;
 		
 	}
 	

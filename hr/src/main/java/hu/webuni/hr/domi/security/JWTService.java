@@ -33,7 +33,8 @@ public class JWTService {
 	EmployeeRepository employeeRepository;
 
 	public String createToken(EmployeeUser principal) {
-		return JWT.create().withSubject(principal.getUsername())
+		
+		String token = JWT.create().withSubject(principal.getUsername())
 				.withClaim("employeeId", principal.getEmployee().getId())
 				.withClaim("employeeName", principal.getEmployee().getName())
 				.withClaim("subEmployees", getSubEmployees(principal.getEmployee()))
@@ -42,6 +43,8 @@ public class JWTService {
 				.withExpiresAt(new Date(System.currentTimeMillis()
 						+ TimeUnit.MINUTES.toMillis(config.getSecurity().getExpiresMinutes())))
 				.withIssuer(config.getSecurity().getIssuer()).sign(Algorithm.HMAC256(config.getSecurity().getSecret()));
+
+		return token;
 	}
 	
 	public UserDetails parseJwt(String jwtToken) {
